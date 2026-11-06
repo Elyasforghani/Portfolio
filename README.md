@@ -2,7 +2,6 @@
 
 Personal portfolio of **Elyas Forghani** — front-end & creative developer, chemical engineer (University of Kurdistan).
 
-**Live:** https://parallax-portfolio-xi.vercel.app
 
 ## What's inside
 
