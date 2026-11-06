@@ -161,11 +161,11 @@ export default function ContactCTA() {
         </span>
 
         <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-syne uppercase tracking-tight leading-[1.02] max-w-full break-normal">
-          <span className="inline-block whitespace-nowrap">Have something</span>
+          <span className="inline-block ">Have something</span>
           <span className="block font-serif italic font-normal text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-[#f4ede0] my-2 leading-tight">
             worth building?
           </span>
-          <span className="inline-block whitespace-nowrap">Let&apos;s talk about it.</span>
+          <span className="inline-block ">Let&apos;s talk about it.</span>
         </h2>
 
         <p className="mt-8 text-base md:text-xl text-[#c4b7a1] max-w-xl font-light font-sans leading-relaxed break-words">

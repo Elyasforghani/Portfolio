@@ -579,7 +579,10 @@ export default function OldMastersHero({
   const [fontsReady, setFontsReady] = useState(() => (fontHref ? 0 : 1))
   const [grain, setGrain] = useState('')
   useEffect(() => {
-    setGrain(paintGrain(omHash(wordmark) ^ 0x9e3779b9))
+    const id = requestAnimationFrame(() => {
+      setGrain(paintGrain(omHash(wordmark) ^ 0x9e3779b9))
+    })
+    return () => cancelAnimationFrame(id)
   }, [wordmark])
 
   const phaseRef = useRef(phase)

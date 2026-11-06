@@ -1,35 +1,22 @@
 @import "tailwindcss";
 
 @theme {
-  --font-syne: var(--font-syne-src), 'Syne', sans-serif;
-  --font-space: var(--font-space-src), 'Space Grotesk', sans-serif;
-  --font-cinzel: var(--font-cinzel-src), 'Cinzel', serif;
-  --font-sans: var(--font-sans-src), 'Plus Jakarta Sans', sans-serif;
-  --font-mono: var(--font-mono-src), 'JetBrains Mono', monospace;
-  --font-subtitle: var(--font-subtitle-src), 'Monsieur La Doulaise', cursive;
-  --font-title: var(--font-syne-src), 'Syne', sans-serif;
-  --font-funnel: var(--font-syne-src), 'Syne', sans-serif;
+  --font-syne: 'Syne Variable', sans-serif;
+  --font-space: 'Space Grotesk Variable', sans-serif;
+  --font-cinzel: 'Cinzel Variable', serif;
+  --font-sans: 'Plus Jakarta Sans Variable', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', monospace;
+  --font-subtitle: 'Monsieur La Doulaise', cursive;
+  --font-title: 'Syne Variable', sans-serif;
+  --font-funnel: 'Syne Variable', sans-serif;
 }
-
 @layer utilities {
-  .font-syne {
-    font-family: var(--font-syne-src), 'Syne', sans-serif;
-  }
-  .font-space {
-    font-family: var(--font-space-src), 'Space Grotesk', sans-serif;
-  }
-  .font-cinzel {
-    font-family: var(--font-cinzel-src), 'Cinzel', serif;
-  }
-  .font-sans {
-    font-family: var(--font-sans-src), 'Plus Jakarta Sans', sans-serif;
-  }
-  .font-mono {
-    font-family: var(--font-mono-src), 'JetBrains Mono', monospace;
-  }
-  .font-subtitle {
-    font-family: var(--font-subtitle-src), 'Monsieur La Doulaise', cursive;
-  }
+  .font-syne { font-family: 'Syne Variable', sans-serif; }
+  .font-space { font-family: 'Space Grotesk Variable', sans-serif; }
+  .font-cinzel { font-family: 'Cinzel Variable', serif; }
+  .font-sans { font-family: 'Plus Jakarta Sans Variable', sans-serif; }
+  .font-mono { font-family: 'JetBrains Mono Variable', monospace; }
+  .font-subtitle { font-family: 'Monsieur La Doulaise', cursive; }
 }
 
 @layer base {

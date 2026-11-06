@@ -1,11 +1,9 @@
-import {
-  Syne,
-  Space_Grotesk,
-  Cinzel,
-  Plus_Jakarta_Sans,
-  JetBrains_Mono,
-  Monsieur_La_Doulaise,
-} from 'next/font/google';
+import '@fontsource-variable/syne';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/cinzel';
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource/monsieur-la-doulaise';
 import "./globals.css";
 import ScrollSmooth from './components/ScrollSmooth';
 import SmartCursor from './components/SmartCursor';
@@ -16,50 +14,10 @@ import DevTerminal from './components/DevTerminal';
 import KonamiEasterEgg from './components/KonamiEasterEgg';
 import PageTransitionProvider from './components/PageTransitionProvider';
 
-const syne = Syne({
-  subsets: ['latin'],
-  weight: ['600', '700', '800'],
-  variable: '--font-syne-src',
-  display: 'swap',
-});
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['400', '500', '700'],
-  variable: '--font-space-src',
-  display: 'swap',
-});
-
-const cinzel = Cinzel({
-  subsets: ['latin'],
-  weight: ['600', '800'],
-  variable: '--font-cinzel-src',
-  display: 'swap',
-});
-
-const plusJakarta = Plus_Jakarta_Sans({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600'],
-  variable: '--font-sans-src',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-mono-src',
-  display: 'swap',
-});
-
-const subTitleFont = Monsieur_La_Doulaise({
-  weight: '400',
-  subsets: ['latin'],
-  variable: '--font-subtitle-src',
-  display: 'swap',
-});
 
 export const metadata = {
-  metadataBase: new URL('https://elyasforghani.dev'),
+  metadataBase: new URL('https://elyasforghani.com'),
   title: {
     default: 'Elyas Forghani — Front-End & Creative Developer',
     template: '%s — Elyas Forghani',
@@ -98,10 +56,9 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }) {
-  const fontClasses = `${syne.variable} ${spaceGrotesk.variable} ${cinzel.variable} ${plusJakarta.variable} ${jetbrainsMono.variable} ${subTitleFont.variable}`;
 
   return (
-    <html lang="en" className={`${fontClasses} antialiased`}>
+    <html lang="en" className={` antialiased`}>
       <body className="bg-[#14213d] text-[#f4ede0] selection:bg-[#f4ede0] selection:text-[#14213d] font-sans">
         <ScrollProgressBar />
         <FilmGrain />
