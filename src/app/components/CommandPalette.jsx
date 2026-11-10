@@ -15,13 +15,14 @@ export default function CommandPalette() {
 
   const actions = [
     { label: 'Overview [Home]', href: '/', type: 'Navigation' },
-    { label: 'Works & Case Studies Archive', href: '/works', type: 'Navigation' },
-    { label: 'About & Chemical Engineering Trajectory', href: '/about', type: 'Navigation' },
-    { label: 'R&D 3D Spatial & Motion Lab', href: '/lab', type: 'Navigation' },
+    { label: 'Real Samples & Repositories', href: '/works', type: 'Navigation' },
+    { label: 'About & Trajectory', href: '/about', type: 'Navigation' },
+    { label: 'Motion & Shader Lab', href: '/lab', type: 'Navigation' },
     { label: 'Flagship: GPM Studio E-Commerce Store', external: 'https://gpm-studio.com', type: 'Live Production' },
-    { label: 'Jump: Systems & Architecture Bento', href: '/#bento', type: 'Section' },
-    { label: 'Jump: Thermodynamic Maxims & Code', href: '/#philosophy', type: 'Section' },
-    { label: 'Jump: Engineering Capabilities Deck', href: '/about#capabilities', type: 'Section' },
+    { label: 'Research: ZnO / Y-Zeolite Photocatalysis (Civilica)', external: 'https://civilica.com/doc/1949705/', type: 'Published Paper' },
+    { label: 'Jump: Work & Story Bento', href: '/#bento', type: 'Section' },
+    { label: 'Jump: Engineering Philosophy', href: '/#philosophy', type: 'Section' },
+    { label: 'Jump: Core Capabilities Deck', href: '/about#capabilities', type: 'Section' },
     { label: 'Developer CLI Drawer (~)', action: 'cli', type: 'System Tool' },
     ...PROJECTS.map((p) => ({
       label: `Project: ${p.title}`,

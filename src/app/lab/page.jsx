@@ -1,13 +1,12 @@
 'use client'
 
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ThreeBackground from '../components/ThreeBackground'
 import SystemPipelineSimulator from '../components/SystemPipelineSimulator'
 import HorizontalGallery from '../components/HorizontalGallery'
-import { Activity, Layers, Cpu, Compass, Radio, RotateCcw, Droplets, Gem } from 'lucide-react'
-import { sound } from '../../utils/audio'
+import { Droplets, Gem } from 'lucide-react'
 import * as THREE from 'three'
 
 export default function LabPage() {
@@ -35,7 +34,7 @@ export default function LabPage() {
         vy: (Math.random() - 0.5) * 1.5,
         life: Math.random() * 80 + 20,
         maxLife: 100,
-        color: i % 2 === 0 ? 'rgba(0, 229, 255,' : 'rgba(253, 230, 138,',
+        color: i % 2 === 0 ? 'rgba(255, 107, 91,' : 'rgba(244, 237, 224,',
       })
     }
 
@@ -53,7 +52,7 @@ export default function LabPage() {
 
     let animId
     const renderFluid = () => {
-      ctx.fillStyle = 'rgba(6, 7, 9, 0.22)'
+      ctx.fillStyle = 'rgba(12, 21, 39, 0.22)'
       ctx.fillRect(0, 0, width, height)
 
       const mouseVx = (mouse.x - mouse.prevX) * 0.25
@@ -183,16 +182,12 @@ export default function LabPage() {
 
       <main className="relative z-10 pt-36 pb-32 px-6 max-w-6xl mx-auto">
         {/* Lab Top Header */}
-        <div className="mb-14">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.3em] text-slate-300 mb-3">
-            <Activity className="w-3.5 h-3.5 text-slate-300" />
-            <span>[ R&amp;D EXPERIMENTAL TECHNOLOGY &bull; CHEMICAL ENG &bull; WEBGL ]</span>
-          </div>
-          <h1 className="font-syne text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-white mb-6 break-words">
-            Spatial Motion &amp; Shader Lab
+        <div className="mb-14 pb-8 border-b border-[#f4ede0]/10">
+          <h1 className="font-syne text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-[#f4ede0] mb-4 break-words">
+            Motion &amp; <span className="text-[#ff6b5b]">Shader Lab</span>
           </h1>
-          <p className="text-base sm:text-lg text-neutral-300 max-w-2xl font-light leading-relaxed font-sans break-words">
-            A sandboxed experimentation chamber exploring the frontier of fluid transport dynamics, 3D WebGL refraction shaders, and low-latency interactive vector physics.
+          <p className="text-base sm:text-lg text-[#c4b7a1] max-w-2xl font-light leading-relaxed font-sans break-words">
+            Interactive experiments combining chemical fluid dynamics, WebGL 3D geometry, and thermodynamic equilibrium modeling.
           </p>
         </div>
 

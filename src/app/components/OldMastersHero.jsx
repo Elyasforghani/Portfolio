@@ -113,7 +113,7 @@ const DEFAULT_FIGURES = [
 
 const DEFAULT_BACKDROP = '/images/statues/david.jpg'
 
-const DEFAULT_LABELS = ['Chemical Discipline', 'Creative Development']
+const DEFAULT_LABELS = [' Discipline', 'Creative ']
 
 const DEFAULT_ASIDES = [
   {
@@ -122,7 +122,7 @@ const DEFAULT_ASIDES = [
   },
   {
     title: 'Craft',
-    text: 'Three.js scenes, GSAP timelines and sound design — motion that serves the content, not the other way round.',
+    text: 'Three.js scenes, GSAP timelines  — motion that serves the content, not the other way round.',
   },
 ]
 
@@ -537,16 +537,16 @@ export default function OldMastersHero({
   wordmark = 'FORGHANI',
   face = 'didone',
   scriptInitial = false,
-  tagline = 'Next.js, TypeScript & Three.js — built by hand, source on GitHub.',
-  eyebrow = 'ELYAS FORGHANI · CHEMICAL ENGINEERING & SPATIAL SYSTEMS',
+  tagline = 'Next.js, JS & TS & PostgreSQL ,building beyond imagination ',
+  eyebrow = 'Love is the key  number one',
   brand = 'E.F.',
   nav = [],
   labels = DEFAULT_LABELS,
   asides = DEFAULT_ASIDES,
   annotations = DEFAULT_ANNOTATIONS,
-  plate = 'Plate 01 — Architectural Index',
+  plate = '',
   loadingLabel = 'Loading',
-  cta = { label: 'Explore Works ↓' },
+  cta = { label: 'Explore Works ' },
   onEnter,
   onLoaded,
   tone = 'noir',
@@ -1344,9 +1344,7 @@ export default function OldMastersHero({
               ))}
             </svg>
             <div className="om-plate om-ui">
-              {plate}
-              {plate ? ' · ' : ''}
-              <span>1.0000</span>
+            
             </div>
           </div>
 
@@ -1357,8 +1355,7 @@ export default function OldMastersHero({
           )}
 
           <div className="om-hint om-ui" aria-hidden="true">
-            <i />
-            <span>Scroll</span>
+           
           </div>
           <div ref={liveRef} className="om-live" aria-live="polite" />
         </div>

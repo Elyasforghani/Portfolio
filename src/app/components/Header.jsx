@@ -98,19 +98,16 @@ export default function Header() {
         }`}
       >
         {/* Left: Clean Signature Brand Mark in Glass Capsule */}
-        <div className="pointer-events-auto flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#0c1527]/80 backdrop-blur-xl border border-[#f4ede0]/15 shadow-xl shrink-0">
+        <div className="pointer-events-auto flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#ff6b5b] backdrop-blur-xl border border-[#f4ede0]/15 shadow-xl shrink-0">
           <Link
             href="/"
             data-cursor="HOME"
-            className="group flex items-center gap-2 text-[#f4ede0] hover:text-[#ff6b5b] transition-colors shrink-0"
+            className="group flex items-center gap-2 text-[#f4ede0] hover:text-[#0c1527] transition-colors shrink-0"
           >
-            <span className="font-syne font-black tracking-tight text-sm sm:text-base whitespace-nowrap">
-              ELYAS FORGHANI
+            <span className="font-syne  font-black tracking-tight text-sm sm:text-base whitespace-nowrap">
+              ELYAS 
             </span>
-            <span className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#ff6b5b]/10 border border-[#ff6b5b]/25 text-[10px] font-mono tracking-wider text-[#ff6b5b] uppercase shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b5b] animate-pulse" />
-              <span>Available</span>
-            </span>
+           
           </Link>
         </div>
 
@@ -141,7 +138,7 @@ export default function Header() {
 
         {/* Right: Ambient Controls & Contact CTA */}
         <div className="pointer-events-auto flex items-center gap-2 sm:gap-2.5 shrink-0">
-          <div className="hidden sm:flex items-center px-3 py-1.5 rounded-full bg-[#0c1527]/80 backdrop-blur-xl border border-[#f4ede0]/15 shadow-xl">
+          <div className=" sm:flex items-center px-3 py-1.5 rounded-full bg-[#0c1527]/80 backdrop-blur-xl border border-[#f4ede0]/15 shadow-xl">
             <SoundController />
           </div>
 
@@ -151,7 +148,7 @@ export default function Header() {
             className="hidden sm:inline-flex items-center gap-1.5 text-xs uppercase font-syne font-bold tracking-wider px-4 py-2 rounded-full border border-[#ff6b5b]/40 bg-[#ff6b5b] text-[#14213d] hover:bg-[#ff8577] transition-all duration-300 shadow-lg transform hover:scale-105 shrink-0"
           >
             <span>Let&apos;s Talk</span>
-            <ArrowUpRight className="w-3.5 h-3.5" />
+           
           </a>
 
           {/* Mobile Menu Toggle Button */}
@@ -162,7 +159,7 @@ export default function Header() {
               setMobileMenuOpen((prev) => !prev)
             }}
             aria-label="Toggle navigation menu"
-            className="md:hidden p-2.5 rounded-full bg-black/70 backdrop-blur-md border border-white/20 text-white hover:text-slate-300 transition-colors cursor-pointer"
+            className="md:hidden p-2.5 rounded-full bg-[#0c1527]/80 backdrop-blur-md border border-[#f4ede0]/20 text-[#f4ede0] hover:text-[#ff6b5b] transition-colors cursor-pointer"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -172,15 +169,15 @@ export default function Header() {
       {/* Mobile Navigation Drawer Overlay */}
       {mobileMenuOpen && (
         <div
-          className="fixed inset-0 z-[10001] bg-black/95 backdrop-blur-2xl flex flex-col justify-between p-6 sm:p-8 pt-6 md:hidden animate-in fade-in duration-200 overflow-y-auto"
+          className="fixed inset-0 z-[10001] bg-[#0c1527]/95 backdrop-blur-2xl flex flex-col justify-between p-6 sm:p-8 pt-6 md:hidden animate-in fade-in duration-200 overflow-y-auto"
           role="dialog"
           aria-modal="true"
           aria-label="Navigation menu"
           onClick={() => setMobileMenuOpen(false)}
         >
           {/* Top Bar with brand mark and explicit close button */}
-          <div className="flex items-center justify-between pb-6 border-b border-white/10" onClick={(e) => e.stopPropagation()}>
-            <span className="font-syne font-black text-lg text-white">ELYAS FORGHANI</span>
+          <div className="flex items-center justify-between pb-6 border-b border-[#f4ede0]/10" onClick={(e) => e.stopPropagation()}>
+            <span className="font-syne font-black text-lg text-[#f4ede0]">ELYAS</span>
             <button
               type="button"
               onClick={() => {
@@ -188,7 +185,7 @@ export default function Header() {
                 setMobileMenuOpen(false)
               }}
               aria-label="Close navigation menu"
-              className="p-2 rounded-full bg-white/10 text-white hover:text-slate-300 hover:bg-white/20 transition-colors cursor-pointer"
+              className="p-2 rounded-full bg-white/10 text-[#f4ede0] hover:text-[#ff6b5b] hover:bg-white/20 transition-colors cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -196,9 +193,6 @@ export default function Header() {
 
           {/* Nav Links */}
           <nav className="flex flex-col gap-4 py-8" onClick={(e) => e.stopPropagation()}>
-            <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 mb-2">
-              NAVIGATION DIRECTORY
-            </span>
             {navLinks.map((item) => {
               const isActive =
                 item.href === '/'

@@ -7,48 +7,49 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import ThreeBackground from '../components/ThreeBackground'
 import Capabilities from '../components/Capabilities'
-import { Code2, Database, Box, Zap, Layers, GraduationCap, Radio, ArrowRight } from 'lucide-react'
+import { Code2, Database, Layers, GraduationCap, Radio, ArrowRight, ArrowUpRight } from 'lucide-react'
 
 export default function AboutPage() {
   const timeline = [
     {
       period: '2025 — PRESENT',
-      role: 'Front-End & Creative Developer',
-      org: 'Independent / Open Source',
+      role: 'Front-End & Full-Stack Developer',
+      org: 'Independent / Client Production',
       description:
-        'Building client work — including the GPM Studio storefront (gpm-studio.com) — and shipping open-source projects with Next.js, TypeScript, Tailwind, Three.js and GSAP. This portfolio is the playground.',
+        'Building commercial storefronts — including GPM Studio (gpm-studio.com) — along with REST API dashboards, PostgreSQL schemas, and interactive interfaces powered by Next.js, JavaScript, TypeScript, and GSAP.',
       icon: Code2,
       badge: 'Active Focus',
     },
     {
       period: '2023 — 2024',
       role: 'Control Room Operator',
-      org: 'Ava Nama Noor Company',
+      org: 'Ava Company',
       description:
-        'Ran multi-stream telemetry and live video display walls where nothing was allowed to go dark. First responder for hardware and network failures — and a masterclass in staying calm while diagnosing live systems.',
+        'Ran multi-stream video and sensor display walls where a blank screen meant an incident. Diagnosing hardware and network failures in real time taught me never to trust a system that merely looks fine.',
       icon: Radio,
-      badge: 'Systems Monitoring',
+      badge: 'Operations',
     },
     {
       period: '2018 — 2023',
       role: 'B.Sc. Chemical Engineering',
       org: 'University of Kurdistan',
       description:
-        'Mass and energy transport modeling, systemic feedback loops, numerical methods. Published dynamic matrix data verification at the 9th International Conference on Chemical Engineering.',
+        'Published research on Photocatalytic Degradation of Tetracycline Using ZnO Nanoparticles Supported in a Y-Zeolite Matrix (9th International Conference on Chemical Engineering, Civilica OGPCONF09_037). Mass-transfer and heterogeneous support modeling shaped how I structure software systems.',
       icon: GraduationCap,
       badge: 'Degree & Research',
+      paperUrl: 'https://civilica.com/doc/1949705/',
     },
   ]
 
   const stackClusters = [
     {
-      name: 'Backend & Data',
+      name: 'Backend & Database',
       skills: [
-        'PostgreSQL (relational modeling)',
-        'Prisma ORM (schema migrations)',
-        'Redis (in-memory caching & sessions)',
-        'Docker & Docker Compose',
-        'REST APIs & Server Actions',
+        'PostgreSQL (relational schema design)',
+        'REST APIs & Async Fetch Pipelines',
+        'MockAPI & Full CRUD Data Loops',
+        'React Hook Form Validation',
+        'Data Integrity & Error Recovery',
       ],
       icon: Database,
     },
@@ -56,21 +57,21 @@ export default function AboutPage() {
       name: 'Frontend',
       skills: [
         'Next.js 16 (App Router & SSR)',
-        'React 19 & Server Components',
-        'TypeScript',
-        'Tailwind CSS v4 design tokens',
-        'Responsive mobile-first UX',
+        'React 19 Components',
+        'JavaScript (ES6+) & TypeScript',
+        'Tailwind CSS v4 Styling',
+        'Responsive RTL / LTR Layouts',
       ],
       icon: Code2,
     },
     {
-      name: '3D & Motion',
+      name: 'Motion & Visuals',
       skills: [
-        'Three.js (particles & scenes)',
-        'GSAP 3 & ScrollTrigger',
-        'Lenis smooth scrolling',
-        'Web Audio API',
-        'Custom cursor & interaction states',
+        'GSAP 3 & ScrollTrigger Timelines',
+        'Lenis Smooth Inertial Scrolling',
+        'Three.js Interactive Scenes',
+        'Swiper.js Sliders',
+        'Custom Interaction & Hover States',
       ],
       icon: Layers,
     },
@@ -81,26 +82,23 @@ export default function AboutPage() {
       <ThreeBackground />
       <Header />
 
-      <main className="relative z-10 pt-36 pb-32 px-6 max-w-6xl mx-auto">
+      <main className="relative z-10 pt-36 pb-24 px-6 max-w-6xl mx-auto">
         {/* Top Header */}
-        <div className="mb-16">
-          <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-[0.3em] text-slate-300 mb-3">
-            <span>[ ABOUT / THE LONG VERSION ]</span>
-          </div>
-          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight font-syne text-white mb-6 break-words">
-            Chemical Engineering <br />
-            <span className="text-neutral-500 font-normal">Meets The Front-End</span>
+        <div className="mb-16 pb-8 border-b border-[#f4ede0]/10">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight font-syne text-[#f4ede0] mb-6 break-words">
+            Engineering Logic <br />
+            <span className="text-[#ff6b5b] font-normal">Trustworthy Systems</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-neutral-300 font-light leading-relaxed max-w-3xl font-sans break-words">
-            My path into web development didn’t start in a computer science lecture hall. It started in the chemical engineering labs of the University of Kurdistan, solving mass-transfer equations and thermodynamic systems.
+          <p className="text-base sm:text-lg md:text-xl text-[#c4b7a1] font-light leading-relaxed max-w-3xl font-sans break-words">
+            My path into web development started in the chemical engineering labs of the University of Kurdistan. Studying reaction kinetics, catalyst support matrices, and fluid dynamics gave me the habits I bring to databases and front-end code today.
           </p>
         </div>
 
         {/* Narrative & Portrait Split */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start mb-24">
           <div className="lg:col-span-5">
-            <div className="group relative rounded-3xl overflow-hidden border border-white/15 bg-neutral-900 shadow-2xl">
-              <div className="relative aspect-4/5 w-full overflow-hidden">
+            <div className="group relative rounded-3xl overflow-hidden border border-[#f4ede0]/15 bg-[#0f1a30] shadow-2xl">
+              <div className="relative aspect-[4/5] w-full overflow-hidden">
                 <Image
                   src="/images/elyas-editorial.webp"
                   alt="Elyas Forghani"
@@ -109,55 +107,62 @@ export default function AboutPage() {
                   className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
                   priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0f1a30] via-[#0f1a30]/25 to-transparent" />
               </div>
               <div className="p-6 sm:p-8">
-                <h3 className="font-syne font-black text-2xl uppercase tracking-tight text-white mb-1">
+                <h3 className="font-syne font-black text-2xl uppercase tracking-tight text-[#f4ede0] mb-1">
                   Elyas Forghani
                 </h3>
-                <span className="text-xs font-mono text-slate-300 block mb-4">
+                <span className="text-xs font-mono text-[#ff6b5b] block mb-4">
                   Front-End &amp; Creative Developer
                 </span>
-                <p className="text-xs text-neutral-400 font-light leading-relaxed font-sans">
-                  B.Sc. Chemical Engineering • University of Kurdistan • Open to engineering roles and freelance work.
+                <p className="text-xs text-[#c4b7a1] font-light leading-relaxed font-sans">
+                  B.Sc. Chemical Engineering &bull; University of Kurdistan &bull; Handling big projects with chemistry and care.
                 </p>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-7 space-y-6 text-neutral-300 font-light text-base sm:text-lg leading-relaxed font-sans min-w-0">
-            <h2 className="font-syne font-black text-2xl sm:text-3xl uppercase tracking-tight text-white">
-              From Process Systems to Web Systems
+          <div className="lg:col-span-7 space-y-6 text-[#c4b7a1] font-light text-base sm:text-lg leading-relaxed font-sans min-w-0">
+            <h2 className="font-syne font-black text-2xl sm:text-3xl uppercase tracking-tight text-[#f4ede0]">
+              From Chemical Engineering to Web Systems
             </h2>
             <p>
-              In chemical process engineering, every system has inputs, conversion steps, and one rate-limiting bottleneck that decides the throughput of everything else. If you don’t measure honestly, the system fails under stress.
+              In chemical engineering, performance comes down to structure and bottlenecks. Whether dispersing active nanoparticles inside a Y-Zeolite framework or designing a web interface, giving every component the right support prevents the system from collapsing under load.
             </p>
             <p>
-              When I moved into web development, that mindset carried over. I care about where an app actually gets slow, what happens when the data is late, and whether the interface answers the user immediately. <strong className="text-white font-medium">Next.js</strong> and <strong className="text-white font-medium">TypeScript</strong> give me the structure; <strong className="text-white font-medium">Three.js</strong> and <strong className="text-white font-medium">GSAP</strong> let me make it move.
+              Most of my work focuses on building clean front-ends and dependable data flows: <strong className="text-[#f4ede0] font-medium">Next.js, JavaScript, and TypeScript</strong> for structure, <strong className="text-[#f4ede0] font-medium">PostgreSQL</strong> and REST APIs for reliable data, and <strong className="text-[#f4ede0] font-medium">GSAP and Tailwind CSS</strong> so every interaction responds smoothly.
             </p>
             <p>
-              The best compliment a page can get isn’t “looks expensive” — it’s when someone scrolls it twice just because it feels good. That’s the standard I build to.
+              After a year monitoring live control-room displays at <strong className="text-[#f4ede0] font-medium">Ava Company</strong>, I learned to design interfaces for real conditions — slow networks, edge cases, and clear state feedback — instead of just ideal demos.
             </p>
 
-            <div className="pt-4">
+            <div className="pt-4 flex flex-wrap items-center gap-4">
               <Link
-                href="/lab"
-                data-cursor="LAB"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white text-black font-syne font-bold text-xs uppercase tracking-widest hover:bg-slate-200 transition-colors shadow-lg"
+                href="/works"
+                data-cursor="WORKS"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#ff6b5b] text-[#14213d] font-syne font-bold text-xs uppercase tracking-widest hover:bg-[#ff8577] transition-colors shadow-lg"
               >
-                <span>Explore the 3D WebGL Shader Lab</span>
+                <span>View Works</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
+              <a
+                href="https://civilica.com/doc/1949705/"
+                target="_blank"
+                rel="noopener noreferrer"
+                data-cursor="PAPER"
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0f1a30] border border-[#f4ede0]/20 text-[#f4ede0] font-mono text-xs uppercase tracking-wider hover:border-[#ff6b5b]/50 hover:text-[#ff6b5b] transition-colors"
+              >
+                <span>Published Research (Civilica)</span>
+                <ArrowUpRight className="w-4 h-4" />
+              </a>
             </div>
           </div>
         </div>
 
         {/* Technical Stack Radar */}
         <div className="mb-24">
-          <span className="text-xs font-mono uppercase tracking-[0.25em] text-slate-400 block mb-3">
-            Core Competencies
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight font-syne text-white mb-10">
+          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight font-syne text-[#f4ede0] mb-10">
             Tools I Work With
           </h2>
 
@@ -167,14 +172,14 @@ export default function AboutPage() {
               return (
                 <div
                   key={cluster.name}
-                  className="p-6 sm:p-8 rounded-3xl glass-panel flex flex-col justify-between hover:border-slate-300/40 transition-all duration-300 min-w-0"
+                  className="p-6 sm:p-8 rounded-3xl bg-[#0f1a30]/85 border border-[#f4ede0]/15 flex flex-col justify-between hover:border-[#ff6b5b]/50 transition-all duration-300 min-w-0 shadow-xl"
                 >
                   <div>
                     <div className="flex items-center gap-3 mb-6">
-                      <div className="p-3 rounded-2xl bg-white/5 border border-white/10">
-                        <Icon className="w-5 h-5 text-slate-200" />
+                      <div className="p-3 rounded-2xl bg-[#14213d] border border-[#f4ede0]/15">
+                        <Icon className="w-5 h-5 text-[#ff6b5b]" />
                       </div>
-                      <h3 className="font-syne font-bold text-lg uppercase tracking-tight text-white">
+                      <h3 className="font-syne font-bold text-lg uppercase tracking-tight text-[#f4ede0]">
                         {cluster.name}
                       </h3>
                     </div>
@@ -183,9 +188,9 @@ export default function AboutPage() {
                       {cluster.skills.map((s) => (
                         <li
                           key={s}
-                          className="text-xs font-mono text-neutral-300 flex items-center gap-2"
+                          className="text-xs font-mono text-[#c4b7a1] flex items-center gap-2"
                         >
-                          <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b5b]/80 shrink-0" />
                           <span>{s}</span>
                         </li>
                       ))}
@@ -199,43 +204,52 @@ export default function AboutPage() {
 
         {/* Chronological Timeline */}
         <div>
-          <span className="text-xs font-mono uppercase tracking-[0.25em] text-slate-400 block mb-3">
-            Trajectory
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight font-syne text-white mb-12">
+          <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tight font-syne text-[#f4ede0] mb-12">
             Timeline
           </h2>
 
-          <div className="space-y-8">
+          <div className="space-y-6">
             {timeline.map((item, idx) => {
               const Icon = item.icon
               return (
                 <div
                   key={idx}
-                  className="p-6 sm:p-8 rounded-3xl glass-panel hover:border-slate-300/40 transition-colors flex flex-col md:flex-row md:items-start justify-between gap-6"
+                  className="p-6 sm:p-8 rounded-3xl bg-[#0f1a30]/85 border border-[#f4ede0]/15 hover:border-[#ff6b5b]/50 transition-colors flex flex-col md:flex-row md:items-start justify-between gap-6 shadow-xl"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="p-3 rounded-2xl bg-white/5 border border-white/10 shrink-0">
-                      <Icon className="w-5 h-5 text-slate-200" />
+                    <div className="p-3 rounded-2xl bg-[#14213d] border border-[#f4ede0]/15 shrink-0">
+                      <Icon className="w-5 h-5 text-[#ff6b5b]" />
                     </div>
                     <div>
-                      <div className="flex items-center gap-3 mb-1">
-                        <span className="text-xs font-mono text-slate-400 font-bold">
+                      <div className="flex items-center gap-3 mb-1 flex-wrap">
+                        <span className="text-xs font-mono text-[#ff6b5b] font-bold">
                           {item.period}
                         </span>
-                        <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/5 border border-white/10 text-neutral-400">
+                        <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-white/5 border border-[#f4ede0]/15 text-[#c4b7a1]">
                           {item.badge}
                         </span>
                       </div>
-                      <h3 className="font-syne font-black text-xl sm:text-2xl text-white uppercase tracking-tight">
+                      <h3 className="font-syne font-black text-xl sm:text-2xl text-[#f4ede0] uppercase tracking-tight">
                         {item.role}
                       </h3>
-                      <span className="text-xs font-mono text-neutral-400 block mb-3">
+                      <span className="text-xs font-mono text-[#c4b7a1] block mb-3">
                         {item.org}
                       </span>
-                      <p className="text-sm text-neutral-300 font-light leading-relaxed max-w-2xl font-sans">
+                      <p className="text-sm text-[#c4b7a1] font-light leading-relaxed max-w-2xl font-sans">
                         {item.description}
                       </p>
+                      {item.paperUrl && (
+                        <a
+                          href={item.paperUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          data-cursor="PAPER"
+                          className="inline-flex items-center gap-1.5 text-xs font-mono uppercase tracking-wider text-[#ff6b5b] hover:text-[#f4ede0] transition-colors mt-4 font-semibold"
+                        >
+                          <span>Inspect Conference Paper on Civilica</span>
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>

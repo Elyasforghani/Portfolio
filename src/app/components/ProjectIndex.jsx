@@ -96,15 +96,13 @@ export default function StefanoProjectIndex({ limit = 5 }) {
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16 pb-8 border-b border-[#f4ede0]/10">
         <div>
-          <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#ff6b5b] block mb-3 font-semibold">
-            03 / Selected Works Index
-          </span>
-          <h2 className="font-syne font-black text-4xl sm:text-6xl uppercase tracking-tight text-[#f4ede0]">
-            Curated Works <span className="text-[#c4b7a1]/70 font-normal">({displayedProjects.length.toString().padStart(2, '0')})</span>
+          
+          <h2 className="font-syne font-black text-4xl sm:text-6xl uppercase tracking-tight text-[#ff6b5b] ">
+            Real samples
           </h2>
         </div>
         <p className="text-sm font-sans text-[#c4b7a1] max-w-md font-light leading-relaxed">
-          High-impact production systems, commercial e-commerce platforms, and spatial WebGL interfaces engineered with mathematical precision.
+          High-impact production systems
         </p>
       </div>
 
@@ -193,7 +191,6 @@ export default function StefanoProjectIndex({ limit = 5 }) {
             className="inline-flex items-center gap-2.5 px-6 py-3 rounded-full bg-[#ff6b5b] text-[#14213d] font-syne font-bold text-xs uppercase tracking-widest hover:bg-[#ff8577] transition-all duration-300 shadow-xl group cursor-pointer"
           >
             <span>Explore All {PROJECTS.length} Works in Archive</span>
-            <ArrowRight className="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
       )}

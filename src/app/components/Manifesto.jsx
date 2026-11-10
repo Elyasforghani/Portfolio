@@ -7,7 +7,7 @@ import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import AnimatedHeaderSection from './AnimatedHeaderSection'
-import { Code2, Box, Layers, Zap, ArrowRight } from 'lucide-react'
+import { Code2, Box, Layers, Zap } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -51,9 +51,8 @@ export default function Manifesto() {
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Animated Masked Header */}
         <AnimatedHeaderSection
-          eyebrow="02 / Trajectory &amp; Manifesto"
-          title={['Engineering Logic', '& Moving Pixels']}
-          subtitle="Chemical engineer turned front-end developer. I build interfaces with Next.js, TypeScript and Three.js — and I care how they feel at 60fps."
+          title={['Engineering Logic', 'Trustworthy Database']}
+          subtitle="Front-end developer. I build interfaces with Next.js, TypeScript and GSAP."
           action={
             <Link
               href="/about"
@@ -61,7 +60,7 @@ export default function Manifesto() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 hover:bg-[#ff6b5b] hover:text-[#14213d] border border-[#f4ede0]/15 text-xs font-mono uppercase tracking-widest text-[#f4ede0] transition-colors"
             >
               <span>Full Background</span>
-              <ArrowRight className="w-3.5 h-3.5" />
+              
             </Link>
           }
         />
@@ -88,13 +87,10 @@ export default function Manifesto() {
                   <h4 className="font-syne font-black text-2xl uppercase tracking-tight text-[#f4ede0]">
                     Elyas Forghani
                   </h4>
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono tracking-widest uppercase bg-[#ff6b5b]/10 text-[#ff6b5b] border border-[#ff6b5b]/25 shrink-0">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#ff6b5b] animate-pulse" />
-                    Available for Roles
-                  </span>
+                
                 </div>
                 <p className="text-sm sm:text-base text-neutral-400 font-sans font-light leading-relaxed mb-5">
-                  Chemical engineer turned developer. I build for the web the way I was taught to read a process: find the bottleneck, then fix it.
+                  Handling big Projects is my pleasure. I build for the web the way I was taught to read a process: find the bottleneck, then fix it.
                 </p>
 
                 {/* Tech Badges on Profile */}
@@ -103,16 +99,19 @@ export default function Manifesto() {
                     <Code2 className="w-3 h-3 text-[#ff6b5b]" /> Next.js 16
                   </span>
                   <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
-                    <Code2 className="w-3 h-3 text-[#ff6b5b]" /> TypeScript
+                    <Code2 className="w-3 h-3 text-[#ff6b5b]" /> JavaScript
                   </span>
                   <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
-                    <Layers className="w-3 h-3 text-[#ff6b5b]" /> Three.js WebGL
+                    <Code2 className="w-3 h-3 text-[#ff6b5b]" /> TypeScript
                   </span>
                   <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
                     <Zap className="w-3 h-3 text-[#ff6b5b]" /> GSAP
                   </span>
                   <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
                     <Box className="w-3 h-3 text-[#ff6b5b]" /> Tailwind CSS
+                  </span>
+                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
+                    <Layers className="w-3 h-3 text-[#ff6b5b]" /> PostgreSQL
                   </span>
                 </div>
               </div>
@@ -122,29 +121,26 @@ export default function Manifesto() {
           {/* Right Column: Statement & Engineering Background */}
           <div className="lg:col-span-7 flex flex-col gap-8">
             <div className="js-manifesto-reveal">
-              <span className="text-[#ff6b5b] text-xs font-mono uppercase tracking-[0.25em] block mb-3 font-semibold">
-                01. What I Do
-              </span>
               <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tight font-syne leading-[1.05] text-[#f4ede0]">
-                Backends that hold up. <br />
-                <span className="text-[#c4b7a1]/70 font-normal">Frontends that feel alive.</span>
+                Backends that stay solid <br />
+                <span className="text-[#ff6b5b]/70 font-normal">Frontends that feel alive.</span>
               </h3>
             </div>
 
             <div className="js-manifesto-reveal space-y-5 text-[#c4b7a1] text-base md:text-lg leading-relaxed font-light font-sans">
               <p>
-                I hold a <strong className="text-[#f4ede0] font-medium">B.Sc. in Chemical Engineering</strong> from the University of Kurdistan. That discipline trains you to find the rate-limiting step — the one stage that decides the throughput of the whole process. I never stopped thinking that way; I just apply it to code now.
+                I hold a <strong className="text-[#f4ede0] font-medium">B.Sc. in Chemical Engineering</strong> — my codes have chemistry and love.
               </p>
               <p>
-                Most of my work is front-end: <strong className="text-[#f4ede0] font-medium">Next.js and TypeScript</strong> for structure, <strong className="text-[#f4ede0] font-medium">Tailwind</strong> for styling, and <strong className="text-[#f4ede0] font-medium">Three.js and GSAP</strong> when a page needs to move. I care about the things users actually feel — load time, scroll smoothness, and whether an interaction answers instantly.
+                Most of my work is front-end: <strong className="text-[#f4ede0] font-medium">Next.js, JavaScript and TypeScript</strong> for structure, <strong className="text-[#f4ede0] font-medium">Tailwind CSS</strong> for styling, and <strong className="text-[#f4ede0] font-medium">Three.js and GSAP</strong> when a page needs to move. I care about the things users actually feel — load time, scroll smoothness, and whether an interaction answers instantly.
               </p>
               <p>
-                Before web development, I spent a year running control-room displays at <strong className="text-[#f4ede0] font-medium">Ava Nama Noor</strong>, watching real systems misbehave in real time. It taught me to respect error states and slow data — the parts of an app you only notice when they go wrong.
+                Before web development, I spent a year running control-room displays, watching real systems misbehave in real time. It taught me to respect error states and slow data — the parts of an app you only notice when they go wrong.
               </p>
             </div>
 
             {/* Metrics Grid */}
-            <div className="js-manifesto-reveal grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 pt-6 border-t border-[#f4ede0]/10">
+            <div className="js-manifesto-reveal grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-6 border-t border-[#f4ede0]/10">
               <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-[#f4ede0]/10 min-w-0 flex flex-col justify-between">
                 <span className="block text-xl sm:text-2xl md:text-3xl font-black font-syne text-[#ff6b5b]">
                   35
@@ -153,14 +149,7 @@ export default function Manifesto() {
                   Public Repos
                 </span>
               </div>
-              <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-[#f4ede0]/10 min-w-0 flex flex-col justify-between">
-                <span className="block text-xl sm:text-2xl md:text-3xl font-black font-syne text-[#f4ede0]">
-                  9th
-                </span>
-                <span className="text-[10px] sm:text-[11px] font-mono uppercase tracking-wider text-[#c4b7a1] block break-words mt-1">
-                  Conf. Publication
-                </span>
-              </div>
+              
               <div className="p-4 sm:p-5 rounded-2xl bg-white/[0.04] border border-[#f4ede0]/10 min-w-0 flex flex-col justify-between">
                 <span className="block text-xl sm:text-2xl md:text-3xl font-black font-syne text-[#ff6b5b]">
                   B.Sc.

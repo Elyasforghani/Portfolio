@@ -18,9 +18,9 @@ const MARQUEE_1 = [
   '•',
   'GPM STUDIO STOREFRONT',
   '•',
-  'TYPESCRIPT & NEXT.JS',
+  'NEXT.JS & TYPESCRIPT',
   '•',
-  'THREE.JS WEBGL',
+  'JAVASCRIPT & POSTGRESQL',
   '•',
   'GSAP MOTION',
   '•',
@@ -156,10 +156,6 @@ export default function ContactCTA() {
       </div>
 
       <div className="js-cta-content max-w-5xl mx-auto px-6 text-center flex flex-col items-center">
-        <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#c4b7a1] mb-4 block">
-          06 / Collaboration &amp; Inquiries
-        </span>
-
         <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black font-syne uppercase tracking-tight leading-[1.02] max-w-full break-normal">
           <span className="inline-block ">Have something</span>
           <span className="block font-serif italic font-normal text-3xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-[#f4ede0] my-2 leading-tight">

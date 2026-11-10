@@ -7,8 +7,9 @@ import { Terminal, X, CornerDownLeft, Check, Play } from 'lucide-react'
 const COMMANDS = {
   help: `Available commands:
   • bio         : who I am, the short version
+  • research    : published chemical engineering paper (Civilica #1949705)
   • stack       : what this site runs on
-  • projects    : the real repos & client work
+  • projects    : the 8 real repos & client work
   • github      : open my GitHub profile
   • contact     : how to reach me
   • matrix      : toggle CRT matrix rain overlay
@@ -17,27 +18,33 @@ const COMMANDS = {
 
   bio: `Elyas Forghani
 B.Sc. Chemical Engineering, University of Kurdistan.
-Front-end & creative developer — Next.js, TypeScript, Three.js, GSAP.
-Previously: control-room operator at Ava Nama Noor.
+Front-end & creative developer — Next.js, JavaScript, TypeScript, PostgreSQL, GSAP.
+Previously: control-room operator at Ava Company.
 Currently: building the GPM Studio storefront (gpm-studio.com).`,
 
+  research: `PUBLISHED CONFERENCE PAPER:
+Title : Photocatalytic Degradation of Tetracycline Using ZnO Nanoparticles Supported in a Y-Zeolite Matrix
+Venue : 9th International Conference on Chemical Engineering
+Code  : OGPCONF09_037
+URL   : https://civilica.com/doc/1949705/`,
+
   stack: `THIS SITE, HONESTLY:
-[Core]     : Next.js 16 (App Router), React 19, TypeScript
-[3D/Motion]: Three.js particle field, GSAP ScrollTrigger, Lenis
+[Core]     : Next.js 16 (App Router), React 19, JavaScript / TypeScript
+[Database] : PostgreSQL, REST APIs, MockAPI
+[Motion]   : GSAP ScrollTrigger, Lenis, Three.js
 [Sound]    : Web Audio API ambient loop (mute toggle in header)
 [Styling]  : Tailwind CSS v4 — no UI kit, all hand-rolled
 [Source]   : github.com/Elyasforghani/Parallax-Portfolio`,
 
   projects: `REAL WORK, ALL VERIFIABLE ON GITHUB:
 01. GPM Studio storefront        (client, gpm-studio.com)
-02. User Management Dashboard    (Next.js, MockAPI)
-03. This portfolio               (Next.js, Three.js, GSAP)
-04. Like & Dislike Feed          (Next.js)
-05. Cities Explorer EN/FA        (Next.js, i18n)
+02. Weather Forecast App         (JS, Weather API)
+03. This portfolio               (Next.js, GSAP, Lenis)
+04. Hope Church Website          (Tailwind, JS)
+05. Hotel Abbasi Showcase        (Tailwind, Swiper)
 06. Password Strength Checker    (JS, RegEx)
-07. Weather Forecast App         (JS, Weather API)
-08. Hotel Abbasi Showcase        (Tailwind, Swiper)
-09. Dice Game                    (vanilla JS)`,
+07. User Management Dashboard    (Next.js, REST API)
+08. Dice Game                    (vanilla JS)`,
   github: `Opening github.com/Elyasforghani ...`,
   contact: `Email : elyasfgidev@gmail.com
 GitHub: github.com/Elyasforghani
@@ -210,7 +217,7 @@ export default function DevTerminal() {
             {/* Quick Command Action Chips */}
             <div className="px-4 py-2 bg-white/[0.02] border-b border-white/5 flex items-center gap-2 overflow-x-auto text-[11px] font-mono no-scrollbar">
               <span className="text-neutral-500 shrink-0">Quick run:</span>
-              {['help', 'bio', 'stack', 'projects', 'github', 'contact', 'matrix'].map((cmd) => (
+              {['help', 'bio', 'research', 'stack', 'projects', 'github', 'contact', 'matrix'].map((cmd) => (
                 <button
                   key={cmd}
                   type="button"

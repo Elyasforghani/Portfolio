@@ -15,6 +15,7 @@ import {
   ChevronRight,
   Quote,
   ArrowRight,
+  ArrowUpRight,
 } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -22,63 +23,64 @@ gsap.registerPlugin(ScrollTrigger)
 const MAXIMS = [
   {
     id: '01',
-    category: 'ENTROPY & IMMUTABILITY',
+    category: 'SUPPORT MATRIX & MODULARITY',
     icon: Flame,
-    color: 'from-slate-400/15 to-slate-600/5',
-    borderColor: 'group-hover:border-slate-300/40',
-    accentText: 'text-slate-200',
-    thermoLaw: 'Second Law of Thermodynamics (ΔS ≥ 0)',
-    title: 'Entropy Always Increases; Architecture Must Counteract It',
+    color: 'from-[#ff6b5b]/15 to-[#0c1527]/20',
+    borderColor: 'group-hover:border-[#ff6b5b]/40',
+    accentText: 'text-[#ff6b5b]',
+    thermoLaw: 'Heterogeneous Photocatalysis (ZnO / Y-Zeolite Matrix)',
+    title: 'Structure Prevents Agglomeration — In Catalysts and in Code',
     quote:
-      'In an isolated thermodynamic system, entropy naturally increases toward chaos. In an unmaintained software system, cognitive complexity and latency do exactly the same.',
+      'In my published study (Civilica #1949705, OGPCONF09_037), supporting 40 wt.% ZnO nanoparticles on a Y-Zeolite framework prevented particle clumping, maximized active surface area under UV light, and achieved 71% tetracycline degradation.',
     resolution:
-      'My version of this: keep modules small, name things honestly, and write code that is easy to delete. Complexity compounds quietly — refactoring early is cheaper than untangling later.',
-    formula: 'ΔS ≥ 0 ⟹ Refactor Before It Bites',
+      'Unstructured code clumps together the exact same way unsupported nanoparticles do. Treating Next.js components, JavaScript/TypeScript modules, and PostgreSQL tables as a structured support matrix keeps every piece small, reactive, and easy to maintain.',
+    formula: 'ZnO / Zeolite-Y (71% Removal) ⟹ Decoupled Modular Architecture',
+    paperUrl: 'https://civilica.com/doc/1949705/',
   },
   {
     id: '02',
     category: 'KINETICS & BOTTLENECK ANALYSIS',
     icon: Gauge,
-    color: 'from-red-500/20 to-pink-500/5',
-    borderColor: 'group-hover:border-red-400/40',
-    accentText: 'text-red-400',
+    color: 'from-[#f4ede0]/10 to-[#0c1527]/20',
+    borderColor: 'group-hover:border-[#ff6b5b]/40',
+    accentText: 'text-[#ff6b5b]',
     thermoLaw: 'Chemical Reaction Kinetics (Rate-Determining Step)',
     title: 'The System Only Moves as Fast as Its Slowest Mechanism',
     quote:
       'A reaction’s throughput is never decided by its fastest intermediate; it is governed solely by the rate-limiting bottleneck. Accelerating anything else yields zero net gain.',
     resolution:
-      'I profile before I optimize. A faster animation means nothing if the data fetch is the slow step — so I find the real bottleneck first, and only then decide what deserves the effort.',
+      'I profile before I optimize. A smooth GSAP animation means nothing if the REST API fetch or database query is the slow step — so I find the real bottleneck first, and only then decide what deserves the effort.',
     formula: 'r_net = min(k₁, k₂, …, kₙ) ⟹ Find the Slow Step First',
   },
   {
     id: '03',
     category: 'EQUILIBRIUM & BACKPRESSURE',
     icon: RotateCw,
-    color: 'from-cyan-500/20 to-blue-500/5',
-    borderColor: 'group-hover:border-cyan-400/40',
-    accentText: 'text-cyan-300',
+    color: 'from-[#ff6b5b]/15 to-[#0c1527]/20',
+    borderColor: 'group-hover:border-[#ff6b5b]/40',
+    accentText: 'text-[#ff6b5b]',
     thermoLaw: "Le Chatelier's Principle of Dynamic Equilibrium",
     title: 'Systems Under Stress Must Counteract Perturbations',
     quote:
       'When an equilibrium system is subjected to sudden changes in temperature, pressure, or concentration, it shifts dynamically to mitigate the applied disturbance.',
     resolution:
-      'A year in a control room at Ava Nama Noor taught me what volatility looks like. I design for the bad day: loading states that hold the layout, error states that recover, and interactions that never leave the user stranded.',
+      'A year running control-room displays at Ava Company taught me what real-time volatility looks like. I design for the bad day: loading states that hold the layout, error states that recover cleanly, and UI that never leaves the user stranded.',
     formula: 'Q < K_eq ⟹ Design for the Bad Day',
   },
   {
     id: '04',
-    category: 'TRANSPORT PHENOMENA & SPATIAL UX',
+    category: 'TRANSPORT PHENOMENA & MOTION',
     icon: Compass,
-    color: 'from-emerald-500/20 to-teal-500/5',
-    borderColor: 'group-hover:border-emerald-400/40',
-    accentText: 'text-emerald-300',
+    color: 'from-[#f4ede0]/10 to-[#0c1527]/20',
+    borderColor: 'group-hover:border-[#ff6b5b]/40',
+    accentText: 'text-[#ff6b5b]',
     thermoLaw: 'Boundary Layer Theory & Momentum Transport',
     title: 'Friction at the Boundary Dictates Momentum Transfer',
     quote:
       'The boundary layer governs the transfer of mass, momentum, and heat between distinct phases. Small perturbations at the boundary ripple through the entire bulk phase.',
     resolution:
-      'The screen is the boundary layer between a person and their intent. I choreograph Three.js scenes, tactile audio and Lenis inertia so that moving through a page feels physical instead of flat.',
-    formula: 'τ = μ (du/dy) ⟹ Motion You Can Feel',
+      'The screen is the boundary layer between a person and their intent. I tune GSAP timelines, Lenis scroll inertia, and responsive feedback so moving through a page feels fluid instead of flat.',
+    formula: 'τ = μ (du/dy) ⟹ Motion That Serves Content',
   },
 ]
 
@@ -135,7 +137,7 @@ export default function EngineeringPhilosophy() {
     >
       <div className="max-w-7xl mx-auto">
         <AnimatedHeaderSection
-          eyebrow="05 / Maxims &amp; First Principles"
+          
           title={['What Chemical Engineering', 'Taught Me About Code']}
           subtitle="Four ideas from thermodynamics and transport phenomena that survive the translation into front-end work — no lab required."
         />
@@ -280,9 +282,23 @@ export default function EngineeringPhilosophy() {
               <span className="font-mono text-[11px] sm:text-xs text-[#f4ede0] bg-[#0c1527] px-3.5 py-1.5 rounded-lg border border-[#f4ede0]/15 break-all sm:break-normal max-w-full">
                 {current.formula}
               </span>
-              <span className="text-[11px] font-mono text-[#c4b7a1] uppercase tracking-wider">
-                Elyas Forghani &bull; Field Notes
-              </span>
+              {current.paperUrl ? (
+                <a
+                  href={current.paperUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-cursor="RESEARCH"
+                  onMouseEnter={() => sound.playHoverTick()}
+                  className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#ff6b5b] hover:text-[#f4ede0] uppercase tracking-wider font-semibold transition-colors"
+                >
+                  <span>Read Published Paper (Civilica)</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </a>
+              ) : (
+                <span className="text-[11px] font-mono text-[#c4b7a1] uppercase tracking-wider">
+                  Elyas Forghani &bull; Field Notes
+                </span>
+              )}
             </div>
           </div>
         </div>
