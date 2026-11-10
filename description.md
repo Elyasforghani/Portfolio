@@ -110,7 +110,7 @@ Replaced the previous 3-item footer with an architectural 4-column master matrix
    * Breathing emerald availability beacon (`● AVAILABLE FOR Q1/Q2 FLAGSHIP ENGAGEMENTS`).
    * Architecture coordinates (`LAT: 35.6892° N • LNG: 51.3890° E • REDIS < 1MS • THREE.JS 60FPS`).
 2. **4-Column Master Grid**:
-   * **Col 1 (Identity & Hologram)**: Monumental Syne name, Monsieur La Doulaise cursive flourish, Chemical Engineering credentials, and an interactive 3D character card (`/images/55.webp`) with holographic glassmorphism.
+   * **Col 1 (Identity & Hologram)**: Monumental Syne name, Monsieur La Doulaise cursive flourish, Chemical Engineering credentials, and an interactive 3D character card (`/images/elyas.webp`) with holographic glassmorphism.
    * **Col 2 (Directory Index)**: Clean editorial links to all routes with haptic audio hover ticks.
    * **Col 3 (Technical Arsenal)**: Tactile micro-pills (`Docker`, `PostgreSQL`, `Prisma`, `Redis`, `Next.js 16`, `Three.js`, `GSAP`).
    * **Col 4 (Dispatch & Direct Channels)**: Interactive Click-to-Copy Email Card (`elyasfgidev@gmail.com`) with sound pop and animated emerald `[✓ COPIED TO CLIPBOARD]` state, plus verified social badges (GitHub, LinkedIn, Instagram).

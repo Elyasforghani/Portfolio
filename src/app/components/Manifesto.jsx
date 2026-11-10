@@ -71,7 +71,7 @@ export default function Manifesto() {
             <div className="group relative rounded-3xl overflow-hidden border border-[#f4ede0]/15 bg-[#0f1a30] shadow-2xl">
               <div className="relative aspect-[4/5] w-full overflow-hidden">
                 <Image
-                  src="/images/elyas-editorial.webp"
+                  src="/images/elyas.webp"
                   alt="Elyas Forghani portrait"
                   fill
                   className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"
