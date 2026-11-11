@@ -21,12 +21,12 @@ const ContactCTA = dynamic(() => import('./components/ContactCTA'))
 
 export default function Page() {
   return (
-    <div className="relative bg-[#14213d] text-[#f4ede0] min-h-screen selection:bg-[#f4ede0] selection:text-[#14213d]">
+    <div className="relative bg-[#14213d] text-[#f4ede0] min-h-dvh selection:bg-[#f4ede0] selection:text-[#14213d]">
       {/* Top Floating Minimalist Editorial Header */}
       <Header />
 
       {/* Semantic Accessibility & SEO Landmark */}
-      <main>
+      <main id="main-content" tabIndex={-1}>
         {/* 01 / Monumental Old Masters Classical Diorama Hero */}
         <OldMastersHero />
 

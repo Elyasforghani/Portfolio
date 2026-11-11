@@ -108,6 +108,11 @@ export default function EngineeringPhilosophy() {
 
   useGSAP(
     () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.set('.js-maxim-card', { opacity: 1, y: 0 })
+        return
+      }
+
       gsap.fromTo(
         '.js-maxim-card',
         { opacity: 0, y: 30 },
@@ -157,6 +162,7 @@ export default function EngineeringPhilosophy() {
                   <button
                     key={item.id}
                     type="button"
+                    aria-pressed={isActive}
                     onClick={() => handleSelect(idx)}
                     onMouseEnter={() => sound.playHoverTick()}
                     data-cursor="SELECT"
@@ -186,6 +192,7 @@ export default function EngineeringPhilosophy() {
                       </div>
                     </div>
                     <ItemIcon
+                      aria-hidden="true"
                       className={`w-4 h-4 shrink-0 transition-colors ${
                         isActive ? 'text-[#ff6b5b]' : 'text-[#c4b7a1]/50'
                       }`}
@@ -208,7 +215,7 @@ export default function EngineeringPhilosophy() {
                   aria-label="Previous Principle"
                   className="p-2.5 rounded-full bg-[#0f1a30] hover:bg-[#ff6b5b] hover:text-[#14213d] border border-[#f4ede0]/15 text-[#f4ede0] transition-all cursor-pointer"
                 >
-                  <ChevronLeft className="w-4 h-4" />
+                  <ChevronLeft className="w-4 h-4" aria-hidden="true" />
                 </button>
                 <button
                   type="button"
@@ -217,7 +224,7 @@ export default function EngineeringPhilosophy() {
                   aria-label="Next Principle"
                   className="p-2.5 rounded-full bg-[#0f1a30] hover:bg-[#ff6b5b] hover:text-[#14213d] border border-[#f4ede0]/15 text-[#f4ede0] transition-all cursor-pointer"
                 >
-                  <ChevronRight className="w-4 h-4" />
+                  <ChevronRight className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
             </div>
@@ -227,6 +234,7 @@ export default function EngineeringPhilosophy() {
           <div className="lg:col-span-8 rounded-3xl border border-[#f4ede0]/15 bg-[#0f1a30]/90 backdrop-blur-xl p-8 sm:p-12 relative overflow-hidden flex flex-col justify-between shadow-2xl">
             {/* Ambient Background Glow */}
             <div
+              aria-hidden="true"
               className={`absolute inset-0 bg-gradient-to-br ${current.color} opacity-40 pointer-events-none transition-all duration-700`}
             />
 
@@ -235,7 +243,7 @@ export default function EngineeringPhilosophy() {
               <div className="flex items-center justify-between gap-4 mb-6 flex-wrap">
                 <div className="flex items-center gap-2">
                   <span className="p-2.5 rounded-2xl bg-[#14213d] border border-[#f4ede0]/15">
-                    <CurrentIcon className={`w-5 h-5 text-[#ff6b5b]`} />
+                    <CurrentIcon className="w-5 h-5 text-[#ff6b5b]" aria-hidden="true" />
                   </span>
                   <div>
                     <span className="text-[10px] font-mono uppercase tracking-[0.25em] text-[#c4b7a1] block">
@@ -259,7 +267,7 @@ export default function EngineeringPhilosophy() {
 
               {/* Quote Block */}
               <div className="relative pl-6 border-l-2 border-[#ff6b5b]/50 my-6">
-                <Quote className="w-8 h-8 text-[#ff6b5b]/10 absolute -top-4 -left-3 -z-10" />
+                <Quote className="w-8 h-8 text-[#ff6b5b]/10 absolute -top-4 -left-3 -z-10" aria-hidden="true" />
                 <p className="font-serif italic text-lg sm:text-2xl text-[#f4ede0] font-normal leading-relaxed">
                   &ldquo;{current.quote}&rdquo;
                 </p>
@@ -268,7 +276,7 @@ export default function EngineeringPhilosophy() {
               {/* Software Resolution */}
               <div className="mt-8 pt-6 border-t border-[#f4ede0]/10">
                 <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-[#ff6b5b] block mb-2 flex items-center gap-1.5 font-bold">
-                  <ArrowRight className="w-3.5 h-3.5 text-[#ff6b5b]" />
+                  <ArrowRight className="w-3.5 h-3.5 text-[#ff6b5b]" aria-hidden="true" />
                   What I do with it
                 </span>
                 <p className="text-[#c4b7a1] text-sm sm:text-base font-light font-sans leading-relaxed">
@@ -292,7 +300,7 @@ export default function EngineeringPhilosophy() {
                   className="inline-flex items-center gap-1.5 text-[11px] font-mono text-[#ff6b5b] hover:text-[#f4ede0] uppercase tracking-wider font-semibold transition-colors"
                 >
                   <span>Read Published Paper (Civilica)</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
+                  <ArrowUpRight className="w-3.5 h-3.5" aria-hidden="true" />
                 </a>
               ) : (
                 <span className="text-[11px] font-mono text-[#c4b7a1] uppercase tracking-wider">

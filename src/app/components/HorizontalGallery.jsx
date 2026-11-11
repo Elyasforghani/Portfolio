@@ -83,6 +83,8 @@ export default function HorizontalGallery() {
 
   useGSAP(
     () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
       const track = trackRef.current
       if (!track) return
 
@@ -112,11 +114,11 @@ export default function HorizontalGallery() {
       ref={containerRef}
       className="relative bg-[#14213d] text-[#f4ede0] overflow-hidden border-b border-[#f4ede0]/10"
     >
-      <div className="h-screen w-full flex flex-col justify-between py-8 px-6 sm:px-12">
+      <div className="min-h-dvh w-full flex flex-col justify-between py-8 px-6 sm:px-12">
         {/* Top Header telemetry */}
         <div className="flex items-center justify-between text-xs font-mono uppercase tracking-[0.3em] text-[#c4b7a1]">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#ff6b5b] animate-pulse" />
+            <span aria-hidden="true" className="w-2 h-2 rounded-full bg-[#ff6b5b] animate-pulse motion-reduce:animate-none" />
             <span className="text-[#f4ede0]">[ 04 / HORIZONTAL VISUAL ARCHIVE ]</span>
           </div>
           <span className="hidden sm:inline text-[#ff6b5b]">
@@ -127,29 +129,29 @@ export default function HorizontalGallery() {
         {/* Horizontal Track */}
         <div
           ref={trackRef}
-          className="flex items-center gap-8 will-change-transform my-auto select-none pl-4 pr-16"
+          className="flex items-center gap-8 will-change-transform my-auto select-none pl-4 pr-16 motion-reduce:overflow-x-auto no-scrollbar"
         >
           {/* Section Introductory Title Card */}
-          <div className="w-[300px] sm:w-[420px] shrink-0 p-6 sm:p-8 rounded-3xl glass-panel-glow flex flex-col justify-between h-[60vh] sm:h-[55vh] min-h-[420px] max-h-[580px] overflow-hidden">
+          <div className="w-[300px] sm:w-[420px] shrink-0 p-6 sm:p-8 rounded-3xl glass-panel-glow flex flex-col justify-between h-[60dvh] sm:h-[55dvh] min-h-[420px] max-h-[580px] overflow-hidden">
             <div>
-              <span className="text-xs font-mono uppercase tracking-[0.3em] text-slate-400 mb-3 block">
+              <span className="text-xs font-mono uppercase tracking-[0.3em] text-[#c4b7a1] mb-3 block">
                 Visual Editions
               </span>
-              <h3 className="font-syne font-black text-2xl sm:text-4xl md:text-5xl uppercase tracking-tight text-white mb-3 sm:mb-4 leading-tight break-words">
+              <h3 className="font-syne font-black text-2xl sm:text-4xl md:text-5xl uppercase tracking-tight text-[#f4ede0] mb-3 sm:mb-4 leading-tight break-words">
                 Architectural <br />
-                <span className="font-serif italic lowercase text-2xl sm:text-4xl md:text-5xl text-slate-200 leading-tight">
+                <span className="font-serif italic lowercase text-2xl sm:text-4xl md:text-5xl text-[#f4ede0] leading-tight">
                   geometry
                 </span>
                 <br />
                 &amp; Motion
               </h3>
             </div>
-            <p className="text-xs sm:text-sm font-sans text-neutral-300 font-light leading-relaxed break-words">
+            <p className="text-xs sm:text-sm font-sans text-[#c4b7a1] font-light leading-relaxed break-words">
               A curated photographic reel documenting structural thermodynamics, raw materials, and light dynamics across architectural spaces.
             </p>
-            <div className="pt-4 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-neutral-400">
+            <div className="pt-4 border-t border-[#f4ede0]/10 flex items-center justify-between text-xs font-mono text-[#c4b7a1]">
               <span>{GALLERY_ITEMS.length} Curated Editions</span>
-              <ArrowRight className="w-4 h-4 text-slate-300 animate-bounce" />
+              <ArrowRight className="w-4 h-4 text-[#ff6b5b] animate-bounce motion-reduce:animate-none" aria-hidden="true" />
             </div>
           </div>
 

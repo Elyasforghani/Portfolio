@@ -20,8 +20,9 @@ export default function LabPage() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    let width = (canvas.width = canvas.parentElement?.clientWidth || 500)
-    let height = (canvas.height = 320)
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const width = (canvas.width = canvas.parentElement?.clientWidth || 500)
+    const height = (canvas.height = 320)
 
     const particles = []
     const numParticles = 180
@@ -38,7 +39,7 @@ export default function LabPage() {
       })
     }
 
-    let mouse = { x: -999, y: -999, prevX: 0, prevY: 0 }
+    const mouse = { x: -999, y: -999, prevX: 0, prevY: 0 }
 
     const onMouseMove = (e) => {
       const rect = canvas.getBoundingClientRect()
@@ -50,8 +51,7 @@ export default function LabPage() {
 
     canvas.addEventListener('mousemove', onMouseMove)
 
-    let animId
-    const renderFluid = () => {
+    const drawStep = () => {
       ctx.fillStyle = 'rgba(12, 21, 39, 0.22)'
       ctx.fillRect(0, 0, width, height)
 
@@ -59,44 +59,89 @@ export default function LabPage() {
       const mouseVy = (mouse.y - mouse.prevY) * 0.25
 
       particles.forEach((p) => {
-        // Fluid vortex physics around mouse
-        const dx = p.x - mouse.x
-        const dy = p.y - mouse.y
-        const dist = Math.sqrt(dx * dx + dy * dy)
+        if (!prefersReducedMotion) {
+          const dx = p.x - mouse.x
+          const dy = p.y - mouse.y
+          const dist = Math.sqrt(dx * dx + dy * dy)
 
-        if (dist < 100 && dist > 1) {
-          const force = (100 - dist) / 100
-          // Circular vortex tangential force
-          p.vx += (-dy / dist) * force * 2.5 + mouseVx * 0.4
-          p.vy += (dx / dist) * force * 2.5 + mouseVy * 0.4
+          if (dist < 100 && dist > 1) {
+            const force = (100 - dist) / 100
+            p.vx += (-dy / dist) * force * 2.5 + mouseVx * 0.4
+            p.vy += (dx / dist) * force * 2.5 + mouseVy * 0.4
+          }
+
+          p.x += p.vx
+          p.y += p.vy
+          p.vx *= 0.96
+          p.vy *= 0.96
+
+          if (p.x < 0) p.x = width
+          if (p.x > width) p.x = 0
+          if (p.y < 0) p.y = height
+          if (p.y > height) p.y = 0
         }
 
-        p.x += p.vx
-        p.y += p.vy
-        p.vx *= 0.96 // Fluid friction
-        p.vy *= 0.96
-
-        // Boundary wrap
-        if (p.x < 0) p.x = width
-        if (p.x > width) p.x = 0
-        if (p.y < 0) p.y = height
-        if (p.y > height) p.y = 0
-
-        const alpha = Math.min(1, Math.max(0.1, (Math.abs(p.vx) + Math.abs(p.vy)) * 0.6))
+        const alpha = prefersReducedMotion
+          ? 0.65
+          : Math.min(1, Math.max(0.1, (Math.abs(p.vx) + Math.abs(p.vy)) * 0.6))
         ctx.fillStyle = `${p.color} ${alpha})`
         ctx.beginPath()
         ctx.arc(p.x, p.y, 2, 0, Math.PI * 2)
         ctx.fill()
       })
+    }
 
+    let animId = 0
+    let isInView = true
+    let isPageVisible = !document.hidden
+
+    const stopLoop = () => {
+      cancelAnimationFrame(animId)
+      animId = 0
+    }
+
+    const renderFluid = () => {
+      if (!isInView || !isPageVisible || prefersReducedMotion) {
+        stopLoop()
+        return
+      }
+      drawStep()
       animId = requestAnimationFrame(renderFluid)
     }
 
-    renderFluid()
+    const syncLoop = () => {
+      if (isInView && isPageVisible && !prefersReducedMotion && !animId) {
+        animId = requestAnimationFrame(renderFluid)
+      } else if ((!isInView || !isPageVisible) && animId) {
+        stopLoop()
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInView = entry.isIntersecting
+        syncLoop()
+      },
+      { threshold: 0.05 }
+    )
+    observer.observe(canvas)
+
+    const onVisibility = () => {
+      isPageVisible = !document.hidden
+      syncLoop()
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+
+    drawStep()
+    if (!prefersReducedMotion) {
+      renderFluid()
+    }
 
     return () => {
       canvas.removeEventListener('mousemove', onMouseMove)
-      cancelAnimationFrame(animId)
+      observer.disconnect()
+      document.removeEventListener('visibilitychange', onVisibility)
+      stopLoop()
     }
   }, [])
 
@@ -105,6 +150,7 @@ export default function LabPage() {
     const mount = crystalMountRef.current
     if (!mount) return
 
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const scene = new THREE.Scene()
     const camera = new THREE.PerspectiveCamera(60, mount.clientWidth / 320, 0.1, 1000)
     camera.position.z = 4.2
@@ -114,10 +160,10 @@ export default function LabPage() {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75))
     mount.appendChild(renderer.domElement)
 
-    // Polyhedron geometry with chromatic glass wireframe
+    // Polyhedron geometry with Cream wireframe and Coral inner core
     const geometry = new THREE.IcosahedronGeometry(1.6, 0)
     const material = new THREE.MeshPhysicalMaterial({
-      color: 0xffffff,
+      color: 0xf4ede0,
       metalness: 0.1,
       roughness: 0.1,
       transmission: 0.9,
@@ -130,10 +176,9 @@ export default function LabPage() {
     const crystal = new THREE.Mesh(geometry, material)
     scene.add(crystal)
 
-    // Inner glowing core
     const coreGeo = new THREE.OctahedronGeometry(0.8, 0)
     const coreMat = new THREE.MeshBasicMaterial({
-      color: 0x00e5ff,
+      color: 0xff6b5b,
       wireframe: true,
     })
     const core = new THREE.Mesh(coreGeo, coreMat)
@@ -150,8 +195,20 @@ export default function LabPage() {
 
     mount.addEventListener('mousemove', onMountMouseMove)
 
-    let animId
+    let animId = 0
+    let isInView = true
+    let isPageVisible = !document.hidden
+
+    const stopLoop = () => {
+      cancelAnimationFrame(animId)
+      animId = 0
+    }
+
     const animate = () => {
+      if (!isInView || !isPageVisible || prefersReducedMotion) {
+        stopLoop()
+        return
+      }
       crystal.rotation.x += 0.006 + mouseY * 0.02
       crystal.rotation.y += 0.008 + mouseX * 0.02
       core.rotation.x -= 0.01
@@ -161,11 +218,42 @@ export default function LabPage() {
       animId = requestAnimationFrame(animate)
     }
 
-    animate()
+    const syncLoop = () => {
+      if (isInView && isPageVisible && !prefersReducedMotion && !animId) {
+        animId = requestAnimationFrame(animate)
+      } else if ((!isInView || !isPageVisible) && animId) {
+        stopLoop()
+      }
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isInView = entry.isIntersecting
+        syncLoop()
+      },
+      { threshold: 0.05 }
+    )
+    observer.observe(mount)
+
+    const onVisibility = () => {
+      isPageVisible = !document.hidden
+      syncLoop()
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+
+    // Render initial static frame cleanly even when reduced motion is enabled
+    crystal.rotation.set(0.35, 0.5, 0)
+    core.rotation.set(-0.25, -0.4, 0)
+    renderer.render(scene, camera)
+    if (!prefersReducedMotion) {
+      animate()
+    }
 
     return () => {
       mount.removeEventListener('mousemove', onMountMouseMove)
-      cancelAnimationFrame(animId)
+      observer.disconnect()
+      document.removeEventListener('visibilitychange', onVisibility)
+      stopLoop()
       if (mount && renderer.domElement) mount.removeChild(renderer.domElement)
       geometry.dispose()
       material.dispose()
@@ -176,11 +264,11 @@ export default function LabPage() {
   }, [])
 
   return (
-    <div className="relative font-sans bg-[#14213d] text-[#f4ede0] min-h-screen selection:bg-[#f4ede0] selection:text-[#14213d]">
+    <div className="relative font-sans bg-[#14213d] text-[#f4ede0] min-h-dvh selection:bg-[#f4ede0] selection:text-[#14213d]">
       <ThreeBackground />
       <Header />
 
-      <main className="relative z-10 pt-36 pb-32 px-6 max-w-6xl mx-auto">
+      <main id="main-content" tabIndex={-1} className="relative z-10 pt-36 pb-32 px-6 max-w-6xl mx-auto">
         {/* Lab Top Header */}
         <div className="mb-14 pb-8 border-b border-[#f4ede0]/10">
           <h1 className="font-syne text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight text-[#f4ede0] mb-4 break-words">
@@ -199,20 +287,25 @@ export default function LabPage() {
               <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-[#c4b7a1] mb-2">
                 <span className="font-bold text-[#f4ede0]">Experiment 01</span>
                 <span className="text-[#ff6b5b] flex items-center gap-1 font-semibold">
-                  <Droplets className="w-3.5 h-3.5" /> Fluid Vortex Dynamics
+                  <Droplets className="w-3.5 h-3.5" aria-hidden="true" /> Fluid Vortex Dynamics
                 </span>
               </div>
-              <h3 className="font-syne font-black text-xl sm:text-2xl uppercase tracking-tight text-[#f4ede0] mb-2 break-words">
+              <h2 className="font-syne font-black text-xl sm:text-2xl uppercase tracking-tight text-[#f4ede0] mb-2 break-words">
                 Navier-Stokes Streamlines
-              </h3>
+              </h2>
               <p className="text-xs text-[#c4b7a1] font-sans leading-relaxed mb-4 break-words">
                 Derived from Chemical Engineering transport phenomena: move your cursor over the canvas to inject tangential vortex velocity and observe laminar fluid damping.
               </p>
             </div>
 
             <div className="relative w-full h-[320px] rounded-2xl overflow-hidden border border-[#f4ede0]/15 bg-[#0c1527] shadow-inner">
-              <canvas ref={fluidCanvasRef} className="w-full h-full cursor-crosshair" />
-              <div className="absolute bottom-3 left-3 text-[10px] font-mono text-[#c4b7a1]/70 uppercase tracking-wider pointer-events-none">
+              <canvas
+                ref={fluidCanvasRef}
+                role="img"
+                aria-label="Interactive Navier-Stokes fluid streamline simulation"
+                className="w-full h-full cursor-crosshair"
+              />
+              <div className="absolute bottom-3 left-3 text-xs font-mono text-[#c4b7a1] uppercase tracking-wider pointer-events-none">
                 Interactive: Drag cursor to stir fluid vortex
               </div>
             </div>
@@ -224,12 +317,12 @@ export default function LabPage() {
               <div className="flex items-center justify-between text-xs font-mono uppercase tracking-widest text-[#c4b7a1] mb-2">
                 <span className="font-bold text-[#f4ede0]">Experiment 02</span>
                 <span className="text-[#ff6b5b] flex items-center gap-1 font-semibold">
-                  <Gem className="w-3.5 h-3.5" /> Three.js WebGL Core
+                  <Gem className="w-3.5 h-3.5" aria-hidden="true" /> Three.js WebGL Core
                 </span>
               </div>
-              <h3 className="font-syne font-black text-xl sm:text-2xl uppercase tracking-tight text-[#f4ede0] mb-2 break-words">
+              <h2 className="font-syne font-black text-xl sm:text-2xl uppercase tracking-tight text-[#f4ede0] mb-2 break-words">
                 Chromatic Refraction Polyhedron
-              </h3>
+              </h2>
               <p className="text-xs text-[#c4b7a1] font-sans leading-relaxed mb-4 break-words">
                 Real-time 3D icosahedral wireframe with physical transmission properties and dual-axis rotational tracking tied to normalized viewport coordinates.
               </p>
@@ -237,9 +330,11 @@ export default function LabPage() {
 
             <div
               ref={crystalMountRef}
+              role="img"
+              aria-label="Interactive 3D polyhedron wireframe scene"
               className="relative w-full h-[320px] rounded-2xl overflow-hidden border border-[#f4ede0]/15 bg-[#0c1527] flex items-center justify-center cursor-grab active:cursor-grabbing shadow-inner"
             >
-              <div className="absolute bottom-3 left-3 text-[10px] font-mono text-[#c4b7a1]/70 uppercase tracking-wider pointer-events-none">
+              <div className="absolute bottom-3 left-3 text-xs font-mono text-[#c4b7a1] uppercase tracking-wider pointer-events-none">
                 Interactive: Orbit crystal via mouse position
               </div>
             </div>
@@ -252,9 +347,9 @@ export default function LabPage() {
             <span className="text-xs font-mono uppercase tracking-widest text-[#ff6b5b] mb-2 block font-semibold">
               Experiment 03 / Thermodynamic Telemetry
             </span>
-            <h3 className="font-syne font-black text-2xl sm:text-3xl uppercase tracking-tight text-[#f4ede0] mb-2">
+            <h2 className="font-syne font-black text-2xl sm:text-3xl uppercase tracking-tight text-[#f4ede0] mb-2">
               System Pipeline Simulator
-            </h3>
+            </h2>
             <p className="text-sm text-[#c4b7a1] font-light max-w-2xl">
               Interactive high-concurrency traffic surge and node equilibrium modeling based on chemical reactor thermodynamics.
             </p>

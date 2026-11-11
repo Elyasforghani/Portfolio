@@ -30,11 +30,11 @@ export default async function ProjectDetailPage(props) {
   const nextProject = currentIndex < PROJECTS.length - 1 ? PROJECTS[currentIndex + 1] : null
 
   return (
-    <div className="relative font-sans bg-[#14213d] text-[#f4ede0] min-h-screen selection:bg-[#f4ede0] selection:text-[#14213d]">
+    <div className="relative font-sans bg-[#14213d] text-[#f4ede0] min-h-dvh selection:bg-[#f4ede0] selection:text-[#14213d]">
       <ThreeBackground />
       <Header />
 
-      <main className="relative z-10 pt-36 pb-32 px-6 max-w-6xl mx-auto">
+      <main id="main-content" tabIndex={-1} className="relative z-10 pt-36 pb-32 px-6 max-w-6xl mx-auto">
         {/* Back navigation */}
         <div className="mb-10">
           <Link

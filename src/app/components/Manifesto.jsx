@@ -16,6 +16,11 @@ export default function Manifesto() {
 
   useGSAP(
     () => {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.set('.js-manifesto-reveal', { opacity: 1, y: 0 })
+        return
+      }
+
       gsap.fromTo(
         '.js-manifesto-reveal',
         { opacity: 0, y: 40 },
@@ -84,34 +89,34 @@ export default function Manifesto() {
               {/* Card Bottom Meta */}
               <div className="p-6 sm:p-8">
                 <div className="flex flex-wrap items-center justify-between gap-2 mb-3">
-                  <h4 className="font-syne font-black text-2xl uppercase tracking-tight text-[#f4ede0]">
+                  <p className="font-syne font-black text-2xl uppercase tracking-tight text-[#f4ede0]">
                     Elyas Forghani
-                  </h4>
+                  </p>
                 
                 </div>
-                <p className="text-sm sm:text-base text-neutral-400 font-sans font-light leading-relaxed mb-5">
+                <p className="text-sm sm:text-base text-[#c4b7a1] font-sans font-light leading-relaxed mb-5">
                   Handling big Projects is my pleasure. I build for the web the way I was taught to read a process: find the bottleneck, then fix it.
                 </p>
 
                 {/* Tech Badges on Profile */}
                 <div className="flex flex-wrap gap-1.5 pt-3 border-t border-[#f4ede0]/10">
-                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
-                    <Code2 className="w-3 h-3 text-[#ff6b5b]" /> Next.js 16
+                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-xs font-mono text-[#f4ede0]/85 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
+                    <Code2 className="w-3 h-3 text-[#ff6b5b]" aria-hidden="true" /> Next.js 16
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
-                    <Code2 className="w-3 h-3 text-[#ff6b5b]" /> JavaScript
+                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-xs font-mono text-[#f4ede0]/85 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
+                    <Code2 className="w-3 h-3 text-[#ff6b5b]" aria-hidden="true" /> JavaScript
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
-                    <Code2 className="w-3 h-3 text-[#ff6b5b]" /> TypeScript
+                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-xs font-mono text-[#f4ede0]/85 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
+                    <Code2 className="w-3 h-3 text-[#ff6b5b]" aria-hidden="true" /> TypeScript
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
-                    <Zap className="w-3 h-3 text-[#ff6b5b]" /> GSAP
+                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-xs font-mono text-[#f4ede0]/85 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
+                    <Zap className="w-3 h-3 text-[#ff6b5b]" aria-hidden="true" /> GSAP
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
-                    <Box className="w-3 h-3 text-[#ff6b5b]" /> Tailwind CSS
+                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-xs font-mono text-[#f4ede0]/85 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
+                    <Box className="w-3 h-3 text-[#ff6b5b]" aria-hidden="true" /> Tailwind CSS
                   </span>
-                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-[10px] font-mono text-[#f4ede0]/80 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
-                    <Layers className="w-3 h-3 text-[#ff6b5b]" /> PostgreSQL
+                  <span className="px-2.5 py-1 rounded-lg bg-white/5 border border-[#f4ede0]/10 text-xs font-mono text-[#f4ede0]/85 flex items-center gap-1.5 hover:border-[#ff6b5b]/40 transition-colors">
+                    <Layers className="w-3 h-3 text-[#ff6b5b]" aria-hidden="true" /> PostgreSQL
                   </span>
                 </div>
               </div>

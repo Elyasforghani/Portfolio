@@ -65,6 +65,11 @@ export default function EngineeringBento() {
   useGSAP(
     () => {
       const cards = gsap.utils.toArray('.js-bento-card')
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        gsap.set(cards, { opacity: 1, y: 0, scale: 1 })
+        return
+      }
+
       gsap.fromTo(
         cards,
         { opacity: 0, y: 35, scale: 0.98 },

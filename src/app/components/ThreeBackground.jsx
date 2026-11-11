@@ -18,9 +18,9 @@ export default function ThreeBackground() {
     const mouseDistance = isMobile ? 100 : 150
     const motionScale = prefersReducedMotion ? 0.25 : 1
 
-    // Scene setup
+    // Scene setup (matched to #14213d Navy ground)
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x060709, 0.001)
+    scene.fog = new THREE.FogExp2(0x14213d, 0.001)
 
     const camera = new THREE.PerspectiveCamera(
       70,
@@ -154,7 +154,7 @@ export default function ThreeBackground() {
 
     const handleVisibility = () => {
       isPageVisible = !document.hidden
-      if (isPageVisible && !animationFrameId) {
+      if (isPageVisible && !prefersReducedMotion && !animationFrameId) {
         animationFrameId = requestAnimationFrame(animate)
       }
     }
@@ -165,7 +165,9 @@ export default function ThreeBackground() {
         animationFrameId = 0
         return
       }
-      animationFrameId = requestAnimationFrame(animate)
+      if (!prefersReducedMotion) {
+        animationFrameId = requestAnimationFrame(animate)
+      }
 
       // Smooth mouse and scroll interpolation
       mouse.x += (targetMouse.x - mouse.x) * 0.05

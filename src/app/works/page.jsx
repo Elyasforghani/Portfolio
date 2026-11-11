@@ -23,11 +23,11 @@ export default function WorksArchivePage() {
       : PROJECTS.filter((p) => p.category === selectedCategory)
 
   return (
-    <div className="relative font-sans bg-[#14213d] text-[#f4ede0] min-h-screen selection:bg-[#f4ede0] selection:text-[#14213d]">
+    <div className="relative font-sans bg-[#14213d] text-[#f4ede0] min-h-dvh selection:bg-[#f4ede0] selection:text-[#14213d]">
       <ThreeBackground />
       <Header />
 
-      <main className="relative z-10 pt-36 pb-32 px-6 max-w-7xl mx-auto">
+      <main id="main-content" tabIndex={-1} className="relative z-10 pt-36 pb-32 px-6 max-w-7xl mx-auto">
         {/* Page Top Header */}
         <div className="mb-14">
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight font-syne text-[#f4ede0] mb-4 break-words">
@@ -42,16 +42,17 @@ export default function WorksArchivePage() {
         <div className="flex items-center justify-between gap-4 flex-wrap pb-8 mb-12 border-b border-[#f4ede0]/10">
           <div className="flex items-center gap-2 flex-wrap">
             <div className="flex items-center gap-2 text-xs font-mono text-[#c4b7a1] uppercase tracking-widest mr-2">
-              <Filter className="w-3.5 h-3.5 text-[#ff6b5b]" />
+              <Filter className="w-3.5 h-3.5 text-[#ff6b5b]" aria-hidden="true" />
               <span>Filter:</span>
             </div>
             {categories.map((cat) => (
               <button
                 key={cat}
                 type="button"
+                aria-pressed={selectedCategory === cat}
                 onClick={() => setSelectedCategory(cat)}
                 data-cursor="FILTER"
-                className={`px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 cursor-pointer ${
+                className={`min-h-10 px-4 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                   selectedCategory === cat
                     ? 'bg-[#ff6b5b] text-[#14213d] font-bold shadow-lg'
                     : 'bg-[#0f1a30]/80 border border-[#f4ede0]/15 text-[#c4b7a1] hover:text-[#f4ede0] hover:border-[#ff6b5b]/40'
@@ -62,26 +63,30 @@ export default function WorksArchivePage() {
             ))}
           </div>
 
-          <div className="flex items-center gap-2 bg-[#0f1a30]/80 border border-[#f4ede0]/15 p-1 rounded-full text-xs font-mono">
+          <div className="flex items-center gap-2 bg-[#0f1a30]/80 border border-[#f4ede0]/15 p-1 rounded-full text-xs font-mono" role="group" aria-label="View layout">
             <button
               type="button"
               onClick={() => setViewMode('grid')}
-              className={`p-2 rounded-full transition-colors cursor-pointer ${
+              aria-label="Grid view"
+              aria-pressed={viewMode === 'grid'}
+              className={`min-w-9 min-h-9 inline-flex items-center justify-center p-2 rounded-full transition-colors cursor-pointer ${
                 viewMode === 'grid' ? 'bg-[#ff6b5b] text-[#14213d]' : 'text-[#c4b7a1] hover:text-[#f4ede0]'
               }`}
               title="Grid View"
             >
-              <Grid className="w-3.5 h-3.5" />
+              <Grid className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
             <button
               type="button"
               onClick={() => setViewMode('list')}
-              className={`p-2 rounded-full transition-colors cursor-pointer ${
+              aria-label="Editorial index view"
+              aria-pressed={viewMode === 'list'}
+              className={`min-w-9 min-h-9 inline-flex items-center justify-center p-2 rounded-full transition-colors cursor-pointer ${
                 viewMode === 'list' ? 'bg-[#ff6b5b] text-[#14213d]' : 'text-[#c4b7a1] hover:text-[#f4ede0]'
               }`}
               title="Editorial Index View"
             >
-              <List className="w-3.5 h-3.5" />
+              <List className="w-3.5 h-3.5" aria-hidden="true" />
             </button>
           </div>
         </div>

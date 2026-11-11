@@ -77,11 +77,12 @@ export default function SoundController() {
       onClick={toggleSound}
       type="button"
       data-cursor={isPlaying ? 'MUTE' : 'UNMUTE'}
-      aria-label={isPlaying ? 'Mute ambient soundscape' : 'Play ambient soundscape'}
+      aria-label="Ambient soundscape"
+      aria-pressed={isPlaying}
       className="group relative flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#f4ede0]/15 hover:border-[#ff6b5b]/60 bg-[#0c1527]/80 backdrop-blur-md transition-all duration-300 text-xs font-mono uppercase tracking-wider text-[#f4ede0] hover:text-[#ff6b5b] cursor-pointer shadow-lg"
     >
       {/* Real-time frequency bars */}
-      <span className="flex items-end gap-[2px] h-3.5 w-3.5 justify-center">
+      <span aria-hidden="true" className="flex items-end gap-[2px] h-3.5 w-3.5 justify-center">
         <span
           ref={(el) => (barsRef.current[0] = el)}
           className="w-[2.5px] bg-[#ff6b5b] rounded-full transition-[height] duration-75"

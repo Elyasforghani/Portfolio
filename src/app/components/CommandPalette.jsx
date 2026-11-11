@@ -3,7 +3,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { sound } from '../../utils/audio'
-import { Search, Command, X, Terminal, ArrowRight } from 'lucide-react'
+import { Search, X, Terminal, ArrowRight } from 'lucide-react'
 import { PROJECTS } from '../../data/projects'
 
 export default function CommandPalette() {
@@ -12,6 +12,8 @@ export default function CommandPalette() {
   const [activeIndex, setActiveIndex] = useState(0)
   const router = useRouter()
   const listRef = useRef(null)
+  const dialogRef = useRef(null)
+  const backdropPress = useRef(false)
 
   const actions = [
     { label: 'Overview [Home]', href: '/', type: 'Navigation' },
@@ -93,10 +95,7 @@ export default function CommandPalette() {
 
       if (!isOpen) return
 
-      if (e.key === 'Escape') {
-        e.preventDefault()
-        closePalette()
-      } else if (e.key === 'ArrowDown') {
+      if (e.key === 'ArrowDown') {
         e.preventDefault()
         sound.playHoverTick()
         setActiveIndex((prev) => (filtered.length ? (prev + 1) % filtered.length : 0))
@@ -114,38 +113,63 @@ export default function CommandPalette() {
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, filtered, activeIndex, closePalette, handleSelect])
+  }, [isOpen, filtered, activeIndex, handleSelect])
 
-  // Freeze page scroll while the palette is open
+  // Sync native top-layer modal dialog state and pause Lenis wheel capture
   useEffect(() => {
-    if (!isOpen) return
-    window.__lenis?.stop()
-    const prevOverflow = document.documentElement.style.overflow
-    document.documentElement.style.overflow = 'hidden'
-    return () => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    if (isOpen) {
+      if (!dialog.open) dialog.showModal()
+      window.__lenis?.stop()
+    } else {
+      if (dialog.open) dialog.close()
       window.__lenis?.start()
-      document.documentElement.style.overflow = prevOverflow
     }
   }, [isOpen])
 
-  if (!isOpen) return null
+  const isOutsideRect = (e) => {
+    const rect = dialogRef.current?.getBoundingClientRect()
+    if (!rect) return false
+    return (
+      e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom
+    )
+  }
+
+  const handlePointerDown = (e) => {
+    backdropPress.current = isOutsideRect(e)
+  }
+
+  const handlePointerUp = (e) => {
+    if (backdropPress.current && isOutsideRect(e)) {
+      closePalette()
+    }
+    backdropPress.current = false
+  }
 
   return (
-    <div
-      className="fixed inset-0 z-[10001] bg-black/80 backdrop-blur-md flex items-start justify-center pt-24 px-4 animate-in fade-in duration-200"
-      onClick={closePalette}
-      role="dialog"
-      aria-modal="true"
+    <dialog
+      ref={dialogRef}
+      closedby="any"
       aria-label="Command teleport"
+      onClose={closePalette}
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      className="m-0 mx-auto mt-20 sm:mt-24 w-[calc(100%-2rem)] max-w-xl rounded-2xl bg-[#0f1a30] text-[#f4ede0] border border-[#f4ede0]/20 shadow-2xl p-0 overflow-hidden"
     >
-      <div
-        className="w-full max-w-xl rounded-2xl bg-neutral-900 border border-white/20 shadow-2xl overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-300"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="flex flex-col w-full">
         {/* Search Input Bar */}
-        <div className="flex items-center gap-3 px-5 py-4 border-b border-white/10 bg-black/40">
-          <Search className="w-4 h-4 text-slate-300 shrink-0" />
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-[#f4ede0]/10 bg-[#0c1527]">
+          <Search className="w-4 h-4 text-[#ff6b5b] shrink-0" aria-hidden="true" />
+          <label htmlFor="command-palette-search" className="visually-hidden">
+            Search site navigation and projects
+          </label>
           <input
+            id="command-palette-search"
             autoFocus
             type="text"
             value={query}
@@ -154,26 +178,26 @@ export default function CommandPalette() {
               setActiveIndex(0)
             }}
             placeholder="Teleport to any project, architecture layer, or route..."
-            className="w-full bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-none font-mono"
+            className="w-full bg-transparent text-sm text-[#f4ede0] placeholder:text-[#c4b7a1]/70 font-mono"
           />
           <button
             type="button"
             onClick={closePalette}
             aria-label="Close command palette"
-            className="p-1 rounded-md text-neutral-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+            className="min-w-10 min-h-10 inline-flex items-center justify-center p-2 rounded-full text-[#c4b7a1] hover:text-[#f4ede0] hover:bg-[#14213d] transition-colors cursor-pointer"
           >
-            <X className="w-4 h-4" />
+            <X className="w-4 h-4" aria-hidden="true" />
           </button>
         </div>
 
         {/* Results List */}
         <div
           ref={listRef}
-          className="max-h-80 overflow-y-auto p-2 divide-y divide-white/5 font-mono text-xs"
+          className="max-h-80 overflow-y-auto p-2 divide-y divide-[#f4ede0]/10 font-mono text-xs"
         >
           {filtered.length === 0 ? (
-            <div className="py-8 text-center text-neutral-500 flex flex-col items-center gap-2">
-              <Terminal className="w-6 h-6 text-neutral-600" />
+            <div className="py-8 text-center text-[#c4b7a1] flex flex-col items-center gap-2">
+              <Terminal className="w-6 h-6 text-[#ff6b5b]" aria-hidden="true" />
               <span>No destinations matching &quot;{query}&quot;</span>
             </div>
           ) : (
@@ -188,21 +212,26 @@ export default function CommandPalette() {
                     setActiveIndex(idx)
                     sound.playHoverTick()
                   }}
-                  className={`w-full text-left px-4 py-3 rounded-lg flex items-center justify-between transition-colors cursor-pointer ${
+                  className={`w-full text-left px-4 py-3 rounded-lg flex items-center justify-between gap-2 transition-colors cursor-pointer ${
                     isActive
-                      ? 'bg-white/10 border border-white/30 text-white font-semibold'
-                      : 'text-neutral-300 hover:bg-white/5'
+                      ? 'bg-[#ff6b5b]/15 border border-[#ff6b5b]/50 text-[#f4ede0] font-semibold'
+                      : 'text-[#c4b7a1] hover:text-[#f4ede0] hover:bg-[#14213d]/70'
                   }`}
                 >
                   <div className="flex items-center gap-3 truncate">
-                    <span className="w-1.5 h-1.5 rounded-full bg-white shrink-0" />
+                    <span
+                      aria-hidden="true"
+                      className={`w-1.5 h-1.5 rounded-full shrink-0 ${
+                        isActive ? 'bg-[#ff6b5b]' : 'bg-[#f4ede0]/50'
+                      }`}
+                    />
                     <span className="truncate">{item.label}</span>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <span className="text-[10px] uppercase tracking-wider text-neutral-400 px-2 py-0.5 rounded bg-white/5 border border-white/10">
+                    <span className="text-xs uppercase tracking-wider text-[#c4b7a1] px-2 py-0.5 rounded bg-[#0c1527] border border-[#f4ede0]/15">
                       {item.type}
                     </span>
-                    {isActive && <ArrowRight className="w-3.5 h-3.5 text-white" />}
+                    {isActive && <ArrowRight className="w-3.5 h-3.5 text-[#ff6b5b]" aria-hidden="true" />}
                   </div>
                 </button>
               )
@@ -211,17 +240,17 @@ export default function CommandPalette() {
         </div>
 
         {/* Teleport Footer Telemetry */}
-        <div className="px-5 py-2.5 bg-black/60 border-t border-white/10 flex items-center justify-between text-[11px] font-mono text-neutral-400">
+        <div className="px-5 py-2.5 bg-[#0c1527] border-t border-[#f4ede0]/10 flex items-center justify-between text-xs font-mono text-[#c4b7a1]">
           <span className="flex items-center gap-2">
             <span>[↑↓] Navigate</span>
-            <span>•</span>
+            <span aria-hidden="true">•</span>
             <span>[↵] Teleport</span>
-            <span>•</span>
+            <span aria-hidden="true">•</span>
             <span>[ESC] Dismiss</span>
           </span>
-          <span className="text-slate-300">{filtered.length} targets</span>
+          <span className="text-[#ff8577]">{filtered.length} targets</span>
         </div>
       </div>
-    </div>
+    </dialog>
   )
 }

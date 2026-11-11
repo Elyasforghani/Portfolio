@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import { sound } from '../../utils/audio'
-import { Terminal, X, CornerDownLeft, Check, Play } from 'lucide-react'
+import { X, CornerDownLeft } from 'lucide-react'
 
 const COMMANDS = {
   help: `Available commands:
@@ -62,6 +62,8 @@ export default function DevTerminal() {
   const [isMatrixMode, setIsMatrixMode] = useState(false)
   const bottomRef = useRef(null)
   const inputRef = useRef(null)
+  const dialogRef = useRef(null)
+  const backdropPress = useRef(false)
 
   // Listen to global open event from HUDDock and shortcuts
   useEffect(() => {
@@ -75,32 +77,53 @@ export default function DevTerminal() {
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      // Toggle with backtick (`) or Tilde
+      // Toggle with backtick (`) when not typing inside a form field
       if (e.key === '`' && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
         e.preventDefault()
         sound.playClick()
         setIsOpen((prev) => !prev)
-      } else if (e.key === 'Escape' && isOpen) {
-        e.preventDefault()
-        setIsOpen(false)
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen])
+  }, [])
 
-  // Freeze page scroll while terminal is open
+  // Sync native top-layer dialog state and pause Lenis wheel capture
   useEffect(() => {
-    if (!isOpen) return
-    window.__lenis?.stop()
-    const prevOverflow = document.documentElement.style.overflow
-    document.documentElement.style.overflow = 'hidden'
-    return () => {
+    const dialog = dialogRef.current
+    if (!dialog) return
+
+    if (isOpen) {
+      if (!dialog.open) dialog.showModal()
+      window.__lenis?.stop()
+    } else {
+      if (dialog.open) dialog.close()
       window.__lenis?.start()
-      document.documentElement.style.overflow = prevOverflow
     }
   }, [isOpen])
+
+  const isOutsideRect = (e) => {
+    const rect = dialogRef.current?.getBoundingClientRect()
+    if (!rect) return false
+    return (
+      e.clientX < rect.left ||
+      e.clientX > rect.right ||
+      e.clientY < rect.top ||
+      e.clientY > rect.bottom
+    )
+  }
+
+  const handlePointerDown = (e) => {
+    backdropPress.current = isOutsideRect(e)
+  }
+
+  const handlePointerUp = (e) => {
+    if (backdropPress.current && isOutsideRect(e)) {
+      setIsOpen(false)
+    }
+    backdropPress.current = false
+  }
 
   useEffect(() => {
     if (isOpen) {
@@ -157,125 +180,130 @@ export default function DevTerminal() {
 
   return (
     <>
-      {/* Matrix rain canvas overlay if enabled */}
+      {/* Matrix rain overlay if enabled */}
       {isMatrixMode && (
         <div
           aria-hidden="true"
-          className="fixed inset-0 z-40 pointer-events-none bg-black/60 backdrop-blur-xs font-mono text-emerald-400 text-xs opacity-60 overflow-hidden"
-          style={{ textShadow: '0 0 8px #10b981' }}
+          className="fixed inset-0 z-40 pointer-events-none bg-[#0c1527]/75 backdrop-blur-xs font-mono text-[#ff8577] text-xs opacity-75 overflow-hidden"
         >
-          <div className="p-8 animate-pulse">
+          <div className="p-8 animate-pulse motion-reduce:animate-none">
             [ MATRIX RAIN ACTIVE ] // 01000101 01001100 01011001 01000001 01010011 // NEXT THREE GSAP
           </div>
         </div>
       )}
 
-      {/* Terminal Modal Window */}
-      {isOpen && (
-        <div
-          onClick={() => setIsOpen(false)}
-          className="fixed inset-0 z-[10002] bg-black/80 backdrop-blur-md flex items-center justify-center p-4 animate-in fade-in duration-200"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Developer Telemetry Terminal"
-        >
-          <div
-            className="w-full max-w-2xl h-[520px] rounded-2xl bg-[#090b10] border border-white/20 shadow-[0_25px_80px_rgba(0,0,0,0.95)] flex flex-col overflow-hidden animate-in zoom-in-95 duration-200"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Window Top Titlebar */}
-            <div className="px-4 py-3 bg-black/60 border-b border-white/10 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  aria-label="Close terminal window"
-                  className="w-3 h-3 rounded-full bg-rose-500/80 hover:bg-rose-400 cursor-pointer transition-colors"
-                />
-                <div className="w-3 h-3 rounded-full bg-amber-500/80" />
-                <div className="w-3 h-3 rounded-full bg-emerald-500/80" />
-                <span className="text-xs font-mono text-neutral-400 ml-2">
-                  elyas@kurdistan-lab: ~ (zsh)
-                </span>
-              </div>
-
-              <div className="flex items-center gap-3 text-[11px] font-mono text-neutral-500">
-                <span className="text-emerald-400 flex items-center gap-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                  ONLINE
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setIsOpen(false)}
-                  className="p-1 hover:text-white text-neutral-400 cursor-pointer"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            </div>
-
-            {/* Quick Command Action Chips */}
-            <div className="px-4 py-2 bg-white/[0.02] border-b border-white/5 flex items-center gap-2 overflow-x-auto text-[11px] font-mono no-scrollbar">
-              <span className="text-neutral-500 shrink-0">Quick run:</span>
-              {['help', 'bio', 'research', 'stack', 'projects', 'github', 'contact', 'matrix'].map((cmd) => (
-                <button
-                  key={cmd}
-                  type="button"
-                  onClick={() => runCommand(cmd)}
-                  className="px-2 py-0.5 rounded bg-white/5 hover:bg-white/15 text-neutral-300 hover:text-cyan-300 border border-white/10 transition-colors shrink-0 cursor-pointer"
-                >
-                  {cmd}
-                </button>
-              ))}
-            </div>
-
-            {/* Terminal Body Log */}
-            <div className="flex-1 p-4 font-mono text-xs overflow-y-auto space-y-3 bg-[#06070a]/90 select-text">
-              {history.map((h, i) => (
-                <div
-                  key={i}
-                  className={`leading-relaxed whitespace-pre-wrap break-words ${
-                    h.type === 'system'
-                      ? 'text-cyan-400 font-bold'
-                      : h.type === 'info'
-                      ? 'text-neutral-500'
-                      : h.type === 'input'
-                      ? 'text-slate-200 font-semibold'
-                      : h.type === 'success'
-                      ? 'text-emerald-400'
-                      : 'text-neutral-300'
-                  }`}
-                >
-                  {h.text}
-                </div>
-              ))}
-              <div ref={bottomRef} />
-            </div>
-
-            {/* Terminal Input Line */}
-            <form
-              onSubmit={handleSubmit}
-              className="px-4 py-3 bg-black/80 border-t border-white/10 flex items-center gap-2"
-            >
-              <span className="text-cyan-400 font-mono text-xs font-bold">$</span>
-              <input
-                ref={inputRef}
-                type="text"
-                value={inputVal}
-                onChange={(e) => setInputVal(e.target.value)}
-                placeholder="Type a command ('help' to list them)..."
-                className="flex-1 bg-transparent text-xs font-mono text-white placeholder-neutral-600 focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="p-1 rounded bg-white/10 text-neutral-300 hover:text-white cursor-pointer"
+      {/* Native Modal Developer CLI Dialog */}
+      <dialog
+        ref={dialogRef}
+        closedby="any"
+        aria-labelledby="dev-terminal-title"
+        onClose={() => setIsOpen(false)}
+        onPointerDown={handlePointerDown}
+        onPointerUp={handlePointerUp}
+        className="m-auto w-[calc(100%-2rem)] max-w-2xl h-[520px] max-h-[90dvh] rounded-2xl bg-[#0f1a30] text-[#f4ede0] border border-[#f4ede0]/20 shadow-2xl p-0 overflow-hidden"
+      >
+        <div className="flex flex-col w-full h-full">
+          {/* Window Top Titlebar */}
+          <div className="px-4 py-3 bg-[#0c1527] border-b border-[#f4ede0]/10 flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 min-w-0">
+              <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-[#ff6b5b] shrink-0" />
+              <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-[#f4ede0]/60 shrink-0" />
+              <span aria-hidden="true" className="w-2.5 h-2.5 rounded-full bg-[#ff8577]/70 shrink-0" />
+              <h2
+                id="dev-terminal-title"
+                className="text-xs font-mono text-[#c4b7a1] ml-2 truncate"
               >
-                <CornerDownLeft className="w-3.5 h-3.5" />
+                elyas@kurdistan-lab: ~ (zsh)
+              </h2>
+            </div>
+
+            <div className="flex items-center gap-3 text-xs font-mono shrink-0">
+              <span className="text-[#ff8577] flex items-center gap-1.5">
+                <span aria-hidden="true" className="w-1.5 h-1.5 rounded-full bg-[#ff6b5b] animate-pulse motion-reduce:animate-none" />
+                ONLINE
+              </span>
+              <button
+                type="button"
+                onClick={() => setIsOpen(false)}
+                aria-label="Close developer terminal"
+                className="min-w-10 min-h-10 inline-flex items-center justify-center p-2 rounded-full text-[#c4b7a1] hover:text-[#f4ede0] hover:bg-[#14213d] transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4" aria-hidden="true" />
               </button>
-            </form>
+            </div>
           </div>
+
+          {/* Quick Command Action Chips */}
+          <div className="px-4 py-2 bg-[#14213d]/60 border-b border-[#f4ede0]/10 flex items-center gap-2 overflow-x-auto text-xs font-mono no-scrollbar">
+            <span className="text-[#c4b7a1] shrink-0">Quick run:</span>
+            {['help', 'bio', 'research', 'stack', 'projects', 'github', 'contact', 'matrix'].map((cmd) => (
+              <button
+                key={cmd}
+                type="button"
+                onClick={() => runCommand(cmd)}
+                className="px-2.5 py-1 rounded bg-[#0c1527] hover:bg-[#14213d] text-[#f4ede0] hover:text-[#ff8577] border border-[#f4ede0]/15 transition-colors shrink-0 cursor-pointer"
+              >
+                {cmd}
+              </button>
+            ))}
+          </div>
+
+          {/* Terminal Body Log */}
+          <div
+            role="log"
+            aria-live="polite"
+            className="flex-1 p-4 font-mono text-xs overflow-y-auto space-y-3 bg-[#0c1527] select-text"
+          >
+            {history.map((h, i) => (
+              <div
+                key={i}
+                className={`leading-relaxed whitespace-pre-wrap break-words ${
+                  h.type === 'system'
+                    ? 'text-[#ff6b5b] font-bold'
+                    : h.type === 'info'
+                    ? 'text-[#c4b7a1]'
+                    : h.type === 'input'
+                    ? 'text-[#f4ede0] font-semibold'
+                    : h.type === 'success'
+                    ? 'text-[#ff8577]'
+                    : 'text-[#f4ede0]/90'
+                }`}
+              >
+                {h.text}
+              </div>
+            ))}
+            <div ref={bottomRef} />
+          </div>
+
+          {/* Terminal Input Line */}
+          <form
+            onSubmit={handleSubmit}
+            className="px-4 py-3 bg-[#0c1527] border-t border-[#f4ede0]/10 flex items-center gap-2"
+          >
+            <label htmlFor="dev-terminal-input" className="text-[#ff6b5b] font-mono text-xs font-bold shrink-0">
+              <span aria-hidden="true">$</span>
+              <span className="visually-hidden">Developer CLI command input</span>
+            </label>
+            <input
+              id="dev-terminal-input"
+              ref={inputRef}
+              autoFocus
+              type="text"
+              value={inputVal}
+              onChange={(e) => setInputVal(e.target.value)}
+              placeholder="Type a command ('help' to list them)..."
+              className="flex-1 bg-transparent text-xs font-mono text-[#f4ede0] placeholder:text-[#c4b7a1]/70"
+            />
+            <button
+              type="submit"
+              aria-label="Run terminal command"
+              className="min-w-10 min-h-10 inline-flex items-center justify-center p-2 rounded bg-[#ff6b5b] text-[#14213d] hover:bg-[#ff8577] transition-colors cursor-pointer"
+            >
+              <CornerDownLeft className="w-3.5 h-3.5" aria-hidden="true" />
+            </button>
+          </form>
         </div>
-      )}
+      </dialog>
     </>
   )
 }

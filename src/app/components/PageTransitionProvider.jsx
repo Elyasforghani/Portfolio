@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 
@@ -17,18 +17,18 @@ export default function PageTransitionProvider({ children }) {
     }
 
     const curtain = curtainRef.current
-    if (!curtain) return
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    // Quick cinematic wipe across page on route change
-    const tl = gsap.timeline()
+    if (curtain && !reducedMotion) {
+      // Quick cinematic wipe across page on route change
+      const tl = gsap.timeline()
 
-    tl.set(curtain, {
-      scaleY: 1,
-      transformOrigin: 'bottom center',
-      opacity: 1,
-      pointerEvents: 'auto',
-    })
-      .to(curtain, {
+      tl.set(curtain, {
+        scaleY: 1,
+        transformOrigin: 'bottom center',
+        opacity: 1,
+        pointerEvents: 'auto',
+      }).to(curtain, {
         scaleY: 0,
         transformOrigin: 'top center',
         duration: 0.75,
@@ -38,10 +38,11 @@ export default function PageTransitionProvider({ children }) {
           gsap.set(curtain, { pointerEvents: 'none', opacity: 0 })
         },
       })
+    }
 
     // Scroll to top on page navigation
     if (typeof window !== 'undefined') {
-      if (window.__lenis) {
+      if (window.__lenis && !reducedMotion) {
         window.__lenis.scrollTo(0, { immediate: true })
       } else {
         window.scrollTo(0, 0)
@@ -51,23 +52,23 @@ export default function PageTransitionProvider({ children }) {
 
   return (
     <>
-      {/* Cinematic Transition Curtain Shutter */}
+      {/* Transition Curtain Shutter */}
       <div
         ref={curtainRef}
         aria-hidden="true"
-        className="fixed inset-0 z-[9995] bg-[#060709] pointer-events-none opacity-0 select-none flex flex-col justify-between p-8"
+        className="fixed inset-0 z-[9995] bg-[#0c1527] pointer-events-none opacity-0 select-none flex flex-col justify-between p-8"
         style={{ transformOrigin: 'top center' }}
       >
-        <div className="flex items-center justify-between text-xs font-mono uppercase tracking-[0.3em] text-neutral-400">
+        <div className="flex items-center justify-between text-xs font-mono uppercase tracking-[0.3em] text-[#c4b7a1]">
           <span>ELYAS FORGHANI</span>
           <span>LOADING // ONE MOMENT</span>
         </div>
 
-        <div className="text-center font-syne font-black text-2xl uppercase tracking-widest text-amber-200/90 chromatic-text">
+        <div className="text-center font-syne font-black text-2xl uppercase tracking-widest text-[#f4ede0]">
           {pathname === '/' ? 'OVERVIEW' : pathname.replace('/', '').toUpperCase()}
         </div>
 
-        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-amber-200 to-transparent" />
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#ff6b5b] to-transparent" />
       </div>
 
       {children}

@@ -64,50 +64,53 @@ export default function ContactCTA() {
     () => {
       const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-      if (!reducedMotion) {
-        const m1 = gsap.to('.js-marquee-1', {
-          xPercent: -50,
+      if (reducedMotion) {
+        gsap.set('.js-cta-content', { opacity: 1, y: 0 })
+        return
+      }
+
+      const m1 = gsap.to('.js-marquee-1', {
+        xPercent: -50,
+        repeat: -1,
+        duration: 25,
+        ease: 'none',
+        paused: true,
+      })
+
+      const m2 = gsap.fromTo(
+        '.js-marquee-2',
+        { xPercent: -50 },
+        {
+          xPercent: 0,
           repeat: -1,
-          duration: 25,
+          duration: 30,
           ease: 'none',
           paused: true,
-        })
+        }
+      )
 
-        const m2 = gsap.fromTo(
-          '.js-marquee-2',
-          { xPercent: -50 },
-          {
-            xPercent: 0,
-            repeat: -1,
-            duration: 30,
-            ease: 'none',
-            paused: true,
-          }
-        )
-
-        // Only animate marquees when container is visible in viewport
-        ScrollTrigger.create({
-          trigger: container.current,
-          start: 'top bottom',
-          end: 'bottom top',
-          onEnter: () => {
-            m1.play()
-            m2.play()
-          },
-          onLeave: () => {
-            m1.pause()
-            m2.pause()
-          },
-          onEnterBack: () => {
-            m1.play()
-            m2.play()
-          },
-          onLeaveBack: () => {
-            m1.pause()
-            m2.pause()
-          },
-        })
-      }
+      // Only animate marquees when container is visible in viewport
+      ScrollTrigger.create({
+        trigger: container.current,
+        start: 'top bottom',
+        end: 'bottom top',
+        onEnter: () => {
+          m1.play()
+          m2.play()
+        },
+        onLeave: () => {
+          m1.pause()
+          m2.pause()
+        },
+        onEnterBack: () => {
+          m1.play()
+          m2.play()
+        },
+        onLeaveBack: () => {
+          m1.pause()
+          m2.pause()
+        },
+      })
 
       gsap.from('.js-cta-content', {
         y: 50,
@@ -130,8 +133,8 @@ export default function ContactCTA() {
       ref={container}
       className="relative py-28 md:py-36 bg-[#14213d] text-[#f4ede0] overflow-hidden border-t border-[#f4ede0]/10"
     >
-      {/* High-Contrast Inverted Marquees */}
-      <div className="relative flex flex-col mb-20 md:mb-28 select-none overflow-hidden shadow-2xl">
+      {/* Decorative Kinetic Marquees */}
+      <div aria-hidden="true" className="relative flex flex-col mb-20 md:mb-28 select-none overflow-hidden shadow-2xl">
         {/* Ribbon 1: High-Contrast Inverted Cream Tape */}
         <div className="bg-[#f4ede0] text-[#14213d] py-4 md:py-5 flex whitespace-nowrap overflow-hidden -rotate-1 scale-105 shadow-xl">
           <div className="js-marquee-1 flex items-center gap-8 font-syne font-black text-2xl md:text-5xl uppercase tracking-tighter will-change-transform">
@@ -177,10 +180,10 @@ export default function ContactCTA() {
                 setDrawerOpen(true)
               }}
               data-cursor="TRANSMIT"
-              className="px-8 py-4 rounded-full bg-[#ff6b5b] text-[#14213d] font-syne font-bold text-xs uppercase tracking-widest hover:bg-[#ff8577] transition-all duration-300 transform hover:scale-105 shadow-xl inline-flex items-center gap-2 cursor-pointer whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#ff6b5b]"
+              className="px-8 py-4 rounded-full bg-[#ff6b5b] text-[#14213d] font-syne font-bold text-xs uppercase tracking-widest hover:bg-[#ff8577] transition-all duration-300 transform hover:scale-105 shadow-xl inline-flex items-center gap-2 cursor-pointer whitespace-nowrap"
             >
               <span>Start a Conversation</span>
-              <ArrowUpRight className="w-4 h-4" />
+              <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
             </button>
           </MagneticButton>
 
@@ -189,22 +192,24 @@ export default function ContactCTA() {
               type="button"
               data-cursor="COPY"
               onClick={handleCopyEmail}
-              aria-live="polite"
-              className="px-6 py-4 rounded-full bg-white/5 border border-white/20 text-neutral-300 font-mono text-xs uppercase tracking-wider hover:bg-white/10 hover:border-white/40 transition-all duration-300 cursor-pointer max-w-full truncate inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-300"
+              className="px-6 py-4 rounded-full bg-[#0f1a30]/85 border border-[#f4ede0]/20 text-[#f4ede0] font-mono text-xs uppercase tracking-wider hover:bg-[#0f1a30] hover:border-[#ff6b5b]/60 transition-all duration-300 cursor-pointer max-w-full truncate inline-flex items-center gap-2"
             >
               {copied ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-                  <span className="truncate text-emerald-400 font-bold">Copied to Clipboard!</span>
+                  <Check className="w-3.5 h-3.5 text-[#ff8577] shrink-0" aria-hidden="true" />
+                  <span className="truncate text-[#ff8577] font-bold">Copied to Clipboard!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5 text-slate-300 shrink-0" />
+                  <Copy className="w-3.5 h-3.5 text-[#ff6b5b] shrink-0" aria-hidden="true" />
                   <span className="truncate">Copy: {email}</span>
                 </>
               )}
             </button>
           </MagneticButton>
+          <span role="status" className="visually-hidden">
+            {copied ? 'Email address copied to clipboard.' : ''}
+          </span>
         </div>
 
         {/* Tactile Transmission Drawer */}

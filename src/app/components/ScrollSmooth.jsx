@@ -1,18 +1,36 @@
 'use client'
 
 import ReactLenis from 'lenis/react'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useSyncExternalStore } from 'react'
 import { usePathname } from 'next/navigation'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+const subscribeReducedMotion = (cb) => {
+  const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+  mq.addEventListener('change', cb)
+  return () => mq.removeEventListener('change', cb)
+}
+
+const getReducedMotionSnapshot = () =>
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const getReducedMotionServerSnapshot = () => false
+
 export default function ScrollSmooth({ children }) {
   const lenisRef = useRef(null)
   const pathname = usePathname()
+  const prefersReducedMotion = useSyncExternalStore(
+    subscribeReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  )
 
   useEffect(() => {
+    if (prefersReducedMotion) return
+
     const lenisInstance = lenisRef.current?.lenis
     if (lenisInstance) {
       window.__lenis = lenisInstance
@@ -38,12 +56,12 @@ export default function ScrollSmooth({ children }) {
       gsap.ticker.remove(update)
       window.__lenis = null
     }
-  }, [])
+  }, [prefersReducedMotion])
 
   // Reset scroll position to top whenever navigating between routes
   useEffect(() => {
     const lenis = window.__lenis
-    if (lenis) {
+    if (lenis && !prefersReducedMotion) {
       lenis.scrollTo(0, { immediate: true, force: true })
     } else {
       window.scrollTo(0, 0)
@@ -51,7 +69,11 @@ export default function ScrollSmooth({ children }) {
     // Refresh ScrollTrigger pins & triggers for the new page
     const t = setTimeout(() => ScrollTrigger.refresh(), 150)
     return () => clearTimeout(t)
-  }, [pathname])
+  }, [pathname, prefersReducedMotion])
+
+  if (prefersReducedMotion) {
+    return <>{children}</>
+  }
 
   return (
     <ReactLenis

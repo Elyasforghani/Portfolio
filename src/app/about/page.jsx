@@ -78,11 +78,11 @@ export default function AboutPage() {
   ]
 
   return (
-    <div className="relative font-sans bg-[#14213d] text-[#f4ede0] min-h-screen selection:bg-[#f4ede0] selection:text-[#14213d]">
+    <div className="relative font-sans bg-[#14213d] text-[#f4ede0] min-h-dvh selection:bg-[#f4ede0] selection:text-[#14213d]">
       <ThreeBackground />
       <Header />
 
-      <main className="relative z-10 pt-36 pb-24 px-6 max-w-6xl mx-auto">
+      <main id="main-content" tabIndex={-1} className="relative z-10 pt-36 pb-24 px-6 max-w-6xl mx-auto">
         {/* Top Header */}
         <div className="mb-16 pb-8 border-b border-[#f4ede0]/10">
           <h1 className="text-3xl sm:text-5xl md:text-6xl font-black uppercase tracking-tight font-syne text-[#f4ede0] mb-6 break-words">
