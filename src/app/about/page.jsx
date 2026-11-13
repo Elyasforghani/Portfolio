@@ -100,7 +100,7 @@ export default function AboutPage() {
             <div className="group relative rounded-3xl overflow-hidden border border-[#f4ede0]/15 bg-[#0f1a30] shadow-2xl">
               <div className="relative aspect-[4/5] w-full overflow-hidden">
                 <Image
-                  src="/images/elyas.webp"
+                  src="/images/Elyas.webp"
                   alt="Elyas Forghani"
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"

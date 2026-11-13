@@ -122,7 +122,7 @@ export default function Footer() {
             <div className="group relative w-full max-w-[280px] rounded-2xl p-1 bg-gradient-to-br from-[#f4ede0]/20 via-[#f4ede0]/5 to-[#f4ede0]/10 border border-[#f4ede0]/15 backdrop-blur-xl shadow-2xl transition-all duration-500 hover:border-[#ff6b5b]/50 hover:shadow-[0_0_35px_rgba(255,107,91,0.2)]">
               <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl bg-[#0c1527] flex items-center justify-center">
                 <Image
-                  src="/images/ELyas.webp"
+                  src="/images/Elyas.webp"
                   alt="Elyas Forghani portrait"
                   fill
                   sizes="400px"
