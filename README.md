@@ -14,7 +14,7 @@
 </p>
 
 <p align="center">
-  <a href="https://portfolio-git-main-elyasfgi.vercel.app"><strong>🌐 Live Deployment</strong></a> •
+  <a href="https://elyasforghani.com"><strong>🌐 Live Deployment (elyasforghani.com)</strong></a> •
   <a href="https://github.com/Elyasforghani/Portfolio"><strong>💻 GitHub Repository</strong></a> •
   <a href="https://civilica.com/doc/1949705/"><strong>📄 Published Research</strong></a>
 </p>
@@ -119,7 +119,7 @@ Every project listed below corresponds to genuine, inspectable source code on [G
 |:---|:---|:---|:---:|
 | **GPM Studio** | Next.js, React, Tailwind CSS | Client production storefront for gaming collectibles, cards & posters (Bilingual RTL) | [Live Site](https://gpm-studio.com) |
 | **Weather Forecast App** | JavaScript, Weather API, CSS Grid | Real-time atmospheric conditions, async API fetch pipeline & adaptive condition cards | [Repo](https://github.com/Elyasforghani/Weather) • [Demo](https://elyasforghani.github.io/Weather) |
-| **Parallax Portfolio** | Next.js 16, Three.js, GSAP 3, Lenis | This very site — creative coding, 3D WebGL particle constellation & ambient audio | [Repo](https://github.com/Elyasforghani/Portfolio) • [Demo](https://portfolio-git-main-elyasfgi.vercel.app) |
+| **Parallax Portfolio** | Next.js 16, Three.js, GSAP 3, Lenis | This very site — creative coding, 3D WebGL particle constellation & ambient audio | [Repo](https://github.com/Elyasforghani/Portfolio) • [Demo](https://elyasforghani.com) |
 | **Hope Church** | Tailwind CSS, HTML5, JavaScript | Warm, accessible responsive community portal with service times & sermon library | [Repo](https://github.com/Elyasforghani/hopechurch-tailwind) • [Demo](https://elyasforghani.github.io/hopechurch-tailwind) |
 | **Hotel Abbasi Showcase** | Tailwind CSS, Swiper.js, JS | Luxury Iranian architectural showcase for Isfahan's historic heritage hotel | [Repo](https://github.com/Elyasforghani/hotelabbasi-tailwindproject) • [Demo](https://elyasforghani.github.io/hotelabbasi-tailwindproject) |
 | **Password Strength Meter** | Vanilla JavaScript, RegEx | Client-side heuristic regex engine rating password entropy and variety in real time | [Repo](https://github.com/Elyasforghani/password-strength-check) • [Demo](https://elyasforghani.github.io/password-strength-check) |
